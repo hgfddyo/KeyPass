@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "Key Ring Extension",
+  "version": "1.0.0",
+  "permissions": ["tabs", "activeTab", "clipboardWrite"],
+  "content_scripts": [],
+  "background": {
+    "page": "index.html#/backend",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Key Ring",
+    "default_popup": "index.html#/keys"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

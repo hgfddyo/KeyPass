@@ -1,0 +1,31 @@
+buildscript {
+	ext {
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'di.avi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+
+dependencies {
+	compile "io.reactivex.rxjava2:rxjava:2.1.9"
+	compile "com.fasterxml.jackson.core:jackson-core:2.4.1'"
+	compile "com.fasterxml.jackson.core:jackson-annotations:2.4.1"
+	compile "com.fasterxml.jackson.core:jackson-databind:2.4.1"
+	compile "commons-codec:commons-codec:1.5"
+	testCompile "junit:junit:4.4"
+}

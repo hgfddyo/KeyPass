@@ -1,0 +1,5 @@
+rootProject.name = 'avi'
+include 'core'
+include 'ui'
+include 'spring'
+include 'cli'

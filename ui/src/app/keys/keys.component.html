@@ -1,0 +1,24 @@
+<div class="container">
+  <mat-form-field>
+      <input type="text" #contextAutoComplete placeholder="context" aria-label="Number" matInput [formControl]="contextControl" [matAutocomplete]="autoContext" (blur)="selectContext()">
+      <mat-autocomplete #autoContext="matAutocomplete">
+        <mat-option *ngFor="let context of contextOptions | async" [value]="context">
+          {{ context }}
+        </mat-option>
+      </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+      <input type="text" #loginAutoComplete placeholder="login" aria-label="Number" matInput [formControl]="loginControl" [matAutocomplete]="autoLogin" (blur)="selectLogin()">
+      <mat-autocomplete #autoLogin="matAutocomplete">
+        <mat-option *ngFor="let login of loginOptions | async" [value]="login" >
+          {{ login }}
+        </mat-option>
+      </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+      <input type="password" placeholder="password" aria-label="Number" matInput [(ngModel)]="password">
+      <button class="btn" type="button" ngxClipboard  [cbContent]="password">copy</button>
+      <button class="btn" type="button" (click)="generate()">generate</button>
+      <button class="btn" type="button" (click)="save()">save</button>
+  </mat-form-field>
+</div>
