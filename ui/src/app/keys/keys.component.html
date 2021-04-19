@@ -9,7 +9,7 @@
   </mat-form-field>
   <mat-form-field>
       <input type="text" #loginAutoComplete placeholder="login" aria-label="Number" matInput [formControl]="loginControl" [matAutocomplete]="autoLogin" (blur)="selectLogin()">
-       <button class="btn" type="button" ngxClipboard  [cbContent]="loginControl.value">copy</button>
+       <button class="btn" type="button" ngxClipboard  [cbContent]="login">copy</button>
       <mat-autocomplete #autoLogin="matAutocomplete">
         <mat-option *ngFor="let login of loginOptions | async" [value]="login" >
           {{ login }}
