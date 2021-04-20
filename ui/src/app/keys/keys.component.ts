@@ -100,8 +100,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
       this.keyringService.getKeyRing().subscribe(keyRing => {
         let filtered = keyRing.filter(key =>
           key.context === this.contextControl.value)
-        this.login = filtered.length === 1 ? filtered[0].login : ''
-        this.loginControl.setValue(this.login);
+        this.loginControl.setValue(filtered.length === 1 ? filtered[0].login : '');
         this.password=filtered.length === 1 ? filtered[0].password : ''
       })
     }
