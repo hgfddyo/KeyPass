@@ -64,7 +64,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
           this.optionValues(!val[0] ?
             keyRing :
             keyRing.filter(key =>
-              key.context ? key.context.indexOf(val[0]) === 0 : true)
+              key.context ? key.context.indexOf(val) === 0 : true)
       ,'context')
     ))))
     this.loginOptions = this.loginControl.valueChanges
@@ -127,7 +127,6 @@ export class KeysComponent implements OnInit, AfterViewInit {
         context: this.contextControl.value,
         password: this.password
       })
-      this.subject.next(this.contextControl.value)
     }
   }
 
