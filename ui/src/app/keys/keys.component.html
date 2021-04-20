@@ -1,6 +1,7 @@
 <div class="container">
   <mat-form-field>
       <input type="text" #contextAutoComplete placeholder="context" aria-label="Number" matInput [formControl]="contextControl" [matAutocomplete]="autoContext" (blur)="selectContext()">
+      <button class="btn" type="button" (click)="deleteContext()">delete</button>
       <mat-autocomplete #autoContext="matAutocomplete">
         <mat-option *ngFor="let context of contextOptions | async" [value]="context">
           {{ context }}
@@ -10,6 +11,7 @@
   <mat-form-field>
       <input type="text" #loginAutoComplete placeholder="login" aria-label="Number" matInput [formControl]="loginControl" [matAutocomplete]="autoLogin" (blur)="selectLogin()">
        <button class="btn" type="button" ngxClipboard  [cbContent]="login">copy</button>
+       <button class="btn" type="button" (click)="deleteLogin()">delete</button>
       <mat-autocomplete #autoLogin="matAutocomplete">
         <mat-option *ngFor="let login of loginOptions | async" [value]="login" >
           {{ login }}

@@ -64,7 +64,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
           this.optionValues(!val[0] ?
             keyRing :
             keyRing.filter(key =>
-              key.context ? key.context.indexOf(val) === 0 : true)
+              key.context ? key.context.indexOf(val[0]) === 0 : true)
       ,'context')
     ))))
     this.loginOptions = this.loginControl.valueChanges
@@ -95,7 +95,15 @@ export class KeysComponent implements OnInit, AfterViewInit {
   selectContext() {
     this.subject.next(this.contextControl.value)
     this.password = ''
-    this.context = this.contextControl.value
+    this.loginControl.setValue('')
+    if(this.contextControl.value) {
+      this.keyringService.getKeyRing().subscribe(keyRing => {
+        let filtered = keyRing.filter(key =>
+          key.context === this.contextControl.value)
+        this.loginControl.setValue(filtered.length === 1 ? filtered[0].login : '');
+        this.password=filtered.length === 1 ? filtered[0].password : ''
+      })
+    }
   }
 
   selectLogin() {
@@ -107,6 +115,9 @@ export class KeysComponent implements OnInit, AfterViewInit {
         this.password = filtered.length === 1 ? filtered[0].password : ''
       })
     }
+    else{
+      this.password=''
+    }
   }
 
   save() {
@@ -116,6 +127,33 @@ export class KeysComponent implements OnInit, AfterViewInit {
         context: this.contextControl.value,
         password: this.password
       })
+      this.subject.next(this.contextControl.value)
+    }
+  }
+
+  deleteLogin(){
+   if(this.loginControl.value && this.contextControl.value) {
+      this.keyringService.deleteKey({
+        login: this.loginControl.value,
+        context: this.contextControl.value,
+        password: this.password
+      })
+      this.password = ''
+      this.loginControl.setValue('')
+    }
+  }
+
+  deleteContext(){
+    if(this.contextControl.value) {
+      this.keyringService.deleteKeysOfContext({
+        login: this.loginControl.value,
+        context: this.contextControl.value,
+        password: this.password
+      })
+
+      this.contextControl.setValue('')
+      this.loginControl.setValue('')
+      this.password=''
     }
   }
 
