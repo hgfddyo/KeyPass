@@ -96,6 +96,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
     this.subject.next(this.contextControl.value)
     this.password = ''
     this.context = this.contextControl.value
+    this.loginControl.setValue('')
     if(this.contextControl.value) {
       this.keyringService.getKeyRing().subscribe(keyRing => {
         let filtered = keyRing.filter(key =>
@@ -114,6 +115,9 @@ export class KeysComponent implements OnInit, AfterViewInit {
           key.context === this.contextControl.value)
         this.password = filtered.length === 1 ? filtered[0].password : ''
       })
+    }
+    else{
+      this.password=''
     }
   }
 
