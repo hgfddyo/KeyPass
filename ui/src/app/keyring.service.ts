@@ -135,10 +135,12 @@ export class KeyringService {
       for(var i = keyRing.length - 1; i >= 0; i--) {
         if(keyRing[i].context === key.context) {
         keyRing.splice(i, 1);
-        isDone=true
+        isDone = true
         }
       }
-      if(isDone)this.putKeyRing(keyRing)
+      if(isDone){
+        this.putKeyRing(keyRing)
+      }
     })
   }
 
