@@ -110,6 +110,39 @@ export class KeyringService {
       this.putKeyRing(keyRing)
     })
   }
+  
+  deleteKey(key:Key) {
+    this.getKeyRing().subscribe(keyRing => {
+      if(!keyRing) {
+        keyRing = []
+      }
+      let index = keyRing.findIndex(aKey =>
+        key.login === aKey.login &&
+        key.context === aKey.context)
+      if (index >= 0) {
+        keyRing.splice(index, 1)
+        this.putKeyRing(keyRing)
+      } 
+    })
+  }
+
+  deleteKeysOfContext(key:Key) {
+    this.getKeyRing().subscribe(keyRing => {
+      if(!keyRing) {
+        keyRing = []
+      }
+      let isDone: boolean = false;
+      for(var i = keyRing.length - 1; i >= 0; i--) {
+        if(keyRing[i].context === key.context) {
+        keyRing.splice(i, 1);
+        isDone = true
+        }
+      }
+      if(isDone){
+        this.putKeyRing(keyRing)
+      }
+    })
+  }
 
   putKeyRing(keyRing:Key[]) {
     let json = JSON.stringify(keyRing)

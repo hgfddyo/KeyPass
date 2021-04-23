@@ -95,6 +95,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
   selectContext() {
     this.subject.next(this.contextControl.value)
     this.password = ''
+    this.loginControl.setValue('')
     this.context = this.contextControl.value
     this.loginControl.setValue('')
     if(this.contextControl.value) {
@@ -128,6 +129,32 @@ export class KeysComponent implements OnInit, AfterViewInit {
         context: this.contextControl.value,
         password: this.password
       })
+    }
+  }
+
+  deleteLogin(){
+   if(this.loginControl.value && this.contextControl.value) {
+      this.keyringService.deleteKey({
+        login: this.loginControl.value,
+        context: this.contextControl.value,
+        password: this.password
+      })
+      this.password = ''
+      this.loginControl.setValue('')
+    }
+  }
+
+  deleteContext(){
+    if(this.contextControl.value) {
+      this.keyringService.deleteKeysOfContext({
+        login: this.loginControl.value,
+        context: this.contextControl.value,
+        password: this.password
+      })
+
+      this.contextControl.setValue('')
+      this.loginControl.setValue('')
+      this.password = ''
     }
   }
 
