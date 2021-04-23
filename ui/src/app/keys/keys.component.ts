@@ -102,7 +102,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
         let filtered = keyRing.filter(key =>
           key.context === this.contextControl.value)
         this.loginControl.setValue(filtered.length === 1 ? filtered[0].login : '');
-        this.password=filtered.length === 1 ? filtered[0].password : ''
+        this.password = filtered.length === 1 ? filtered[0].password : ''
       })
     }
   }
@@ -117,7 +117,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
       })
     }
     else{
-      this.password=''
+      this.password = ''
     }
   }
 
