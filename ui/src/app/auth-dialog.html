@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Authorization</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput tabindex="1" placeholder="Login" [(ngModel)]="data.login">
+  </mat-form-field>
+  <mat-form-field>
+    <input type="password" matInput tabindex="1" placeholder="Password" [(ngModel)]="data.password">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" (click)="onLoginClick()" tabindex="2">Login</button>
+  <button mat-button (click)="onRegisterClick()"  [mat-dialog-close]="data" tabindex="-1">Register new</button>
+</div>

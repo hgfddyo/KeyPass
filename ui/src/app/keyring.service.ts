@@ -59,6 +59,11 @@ export class KeyringService {
     })
   }
 
+  registerAccount(account:Account){
+    this.setAccount(account)
+    //ToDo: backend realization of registration new user and implementation of validation of an existing user
+  }
+
   getSetup():Setup {
     return this.setup
   }
