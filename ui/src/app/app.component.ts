@@ -18,13 +18,13 @@ export class AppComponent implements OnInit {
   constructor(public dialog: MatDialog, private keyringService: KeyringService) {}
   
   ngOnInit() {
-   setTimeout(() => { 
-    this.openAuth()
-   }, 200)
+    setTimeout(() => { 
+      this.openAuth()
+    }, 200)
   }
 
   logout() {
-   location.reload()
+    location.reload()
   }
 
   openAuth() {
@@ -42,15 +42,15 @@ export class AppComponent implements OnInit {
         this.account = result
         this.keyringService.setAccount({login: this.account.login, password: this.account.password})
       } else if(result.login && result.password && result.button == true) {
-         this.account = result
-         this.keyringService.registerAccount({login: this.account.login, password: this.account.password})
-        }
+          this.account = result
+          this.keyringService.registerAccount({login: this.account.login, password: this.account.password})
+      }
       setTimeout(() => { 
-       let settings = this.keyringService.getSetup()
-       if(!settings) {
-        let myuuid = uuidv4()
-        this.keyringService.setSetup({device: myuuid, partition: "min"});
-       }
+        let settings = this.keyringService.getSetup()
+        if(!settings) {
+          let myuuid = uuidv4()
+          this.keyringService.setSetup({device: myuuid, partition: "min"});
+        }
       }, 1000)
     });
   }
