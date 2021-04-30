@@ -4,6 +4,7 @@ import { Account } from './account'
 import { KeyringService } from './keyring.service'
 import {v4 as uuidv4} from 'uuid';
 import { min } from 'rxjs/operator/min';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
   
   account:Account
 
-  constructor(public dialog: MatDialog, private keyringService: KeyringService) {}
+  constructor(public dialog: MatDialog, private keyringService: KeyringService, private router: Router) {}
   
   ngOnInit() {
     setTimeout(() => { 
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    location.reload()
+    location.replace('index.html');
   }
 
   openAuth() {

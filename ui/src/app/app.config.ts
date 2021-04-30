@@ -3,5 +3,5 @@ export interface ApplicationConfig {
 }
 
 export const CONFIG: ApplicationConfig = {
-  apiURL: ''
+  apiURL: 'https://localhost:8443'
 };
