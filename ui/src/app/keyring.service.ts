@@ -7,7 +7,7 @@ import { Channel } from './channel'
 import { Setup } from './setup'
 import { Result } from './result'
 import { Observable } from 'rxjs/Observable';
-
+import {CONFIG} from './app.config'
 
 @Injectable()
 export class KeyringService {
@@ -32,10 +32,10 @@ export class KeyringService {
   private keyRing:Key[]
 
   constructor( private http: HttpClient ) {
-    this.loginUrl = "/login"
-    this.putUrl = "/put"
-    this.getUrl = "/get"
-    this.setupUrl =  "/setup"
+    this.loginUrl = CONFIG.apiURL + "/login"
+    this.putUrl = CONFIG.apiURL + "/put"
+    this.getUrl = CONFIG.apiURL + "/get"
+    this.setupUrl =  CONFIG.apiURL + "/setup"
     this.channelUUID = "85839ee8-31d0-4cd5-a7d6-7f55637ccc88"
     this.sign = "0a01c2d7-1d72-4712-93dc-6c44adc13c54"
     this.httpOptions = {

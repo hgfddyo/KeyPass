@@ -4,6 +4,7 @@ import { Account } from './account'
 import { KeyringService } from './keyring.service'
 import {v4 as uuidv4} from 'uuid';
 import { min } from 'rxjs/operator/min';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,19 +13,27 @@ import { min } from 'rxjs/operator/min';
 })
 export class AppComponent implements OnInit {
   title = 'Keys ring'
-  
+
   account:Account
 
-  constructor(public dialog: MatDialog, private keyringService: KeyringService) {}
+  constructor(public dialog: MatDialog, private keyringService: KeyringService, private router: Router) {}
   
   ngOnInit() {
-    setTimeout(() => { 
-      this.openAuth()
-    }, 200)
+    let account = JSON.parse(localStorage.getItem('currentAccount'));
+    console.log(account)
+    if(account){
+      this.account = account
+      this.keyringService.setAccount({login: this.account.login, password: this.account.password})
+    } else {
+        setTimeout(() => {
+        this.openAuth()
+        }, 200)
+    }
   }
 
   logout() {
-    location.reload()
+    localStorage.removeItem('currentAccount');
+    location.replace('index.html');
   }
 
   openAuth() {
@@ -40,12 +49,16 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result.login && result.password && result.button == false) {
         this.account = result
+        localStorage.setItem('currentAccount', JSON.stringify(this.account))
+        let account = JSON.parse(localStorage.getItem('currentAccount'));
+        console.log(account)
         this.keyringService.setAccount({login: this.account.login, password: this.account.password})
       } else if(result.login && result.password && result.button == true) {
           this.account = result
+          localStorage.setItem('currentAccount', JSON.stringify(this.account))
           this.keyringService.registerAccount({login: this.account.login, password: this.account.password})
       }
-      setTimeout(() => { 
+      setTimeout(() => {
         let settings = this.keyringService.getSetup()
         if(!settings) {
           let myuuid = uuidv4()
