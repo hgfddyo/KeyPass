@@ -23,6 +23,8 @@ export class KeyringService {
 
   private setupUrl:string
 
+  private registerUrl:string
+
   private channelUUID:string
 
   private sign:string
@@ -36,6 +38,7 @@ export class KeyringService {
     this.putUrl = CONFIG.apiURL + "/put"
     this.getUrl = CONFIG.apiURL + "/get"
     this.setupUrl =  CONFIG.apiURL + "/setup"
+    this.registerUrl = CONFIG.apiURL + "/registerAcc"
     this.channelUUID = "85839ee8-31d0-4cd5-a7d6-7f55637ccc88"
     this.sign = "0a01c2d7-1d72-4712-93dc-6c44adc13c54"
     this.httpOptions = {
@@ -47,21 +50,53 @@ export class KeyringService {
   setAccount(account:Account) {
     this.account = account
     let self = this
-    this.http.post<Result>(this.loginUrl, account, this.httpOptions).subscribe(result => {
+    this.http.post<Result>(this.loginUrl, {
+      uuid: self.channelUUID,
+      login: account.login,
+      password: account.password
+    }, this.httpOptions).subscribe(result => {
       let token = <string>result['data']
-      this.httpOptions =  {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        })
+      if(token.length > 0){
+        this.httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          })
+        }
+        this.loadSetup()
+      } else {
+          alert("Bad Account credentials!")
+          window.location.replace("index.html")
+          localStorage.removeItem('currentAccount');
       }
-      this.loadSetup()
     })
   }
 
   registerAccount(account:Account){
-    this.setAccount(account)
-    //ToDo: backend realization of registration of new user and implementation of validation of an existing user
+    this.account = account
+    let self = this
+    this.http.post<Result>(this.registerUrl, {
+      uuid: self.channelUUID,
+      login: account.login,
+      password: account.password
+      }, this.httpOptions).subscribe(result => {
+      let token = <string>result['data']
+      if(token.length > 0){
+        this.httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          })
+        }
+        setTimeout(() => {
+          this.rentPlace("")
+        }, 1000)
+      } else {
+          alert("this user already exists!")
+          window.location.replace("index.html")
+          localStorage.removeItem('currentAccount');
+      }
+    })
   }
 
   getSetup():Setup {
@@ -115,7 +150,7 @@ export class KeyringService {
       this.putKeyRing(keyRing)
     })
   }
-  
+
   deleteKey(key:Key) {
     this.getKeyRing().subscribe(keyRing => {
       if(!keyRing) {
@@ -127,7 +162,7 @@ export class KeyringService {
       if (index >= 0) {
         keyRing.splice(index, 1)
         this.putKeyRing(keyRing)
-      } 
+      }
     })
   }
 
@@ -155,6 +190,15 @@ export class KeyringService {
     this.http.post<Result>(this.putUrl, {
       channel:  {uuid: this.channelUUID},
       data:     {content: json},
+      sign:     self.sign
+    }, this.httpOptions).subscribe()
+  }
+
+  rentPlace(str:String) {
+    let self = this
+    this.http.post<Result>(this.putUrl, {
+      channel:  {uuid: this.channelUUID},
+      data:     {content: str},
       sign:     self.sign
     }, this.httpOptions).subscribe()
   }

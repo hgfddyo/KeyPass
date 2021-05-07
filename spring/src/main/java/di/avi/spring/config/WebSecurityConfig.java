@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable().authorizeRequests()
                 .antMatchers("/", "/*.js", "/*.html", "/#/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/registerAcc").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // And filter other requests to check the presence of JWT in header
