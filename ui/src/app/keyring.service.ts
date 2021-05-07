@@ -89,12 +89,18 @@ export class KeyringService {
           })
         }
         setTimeout(() => {
+          /*
+          Adding an empty line to user data to enter a login is implemented in the frontend part of the application, 
+          because to add data to the user in the backend part, 
+          it is necessary that the settings have already been specified when adding data, 
+          at the current moment the settings are transferred to the application after a period of time after entering the credentials of user.
+          */ 
           this.rentPlace("")
         }, 1000)
       } else {
           alert("this user already exists!")
           window.location.replace("index.html")
-          localStorage.removeItem('currentAccount');
+          localStorage.removeItem('currentAccount')
       }
     })
   }
