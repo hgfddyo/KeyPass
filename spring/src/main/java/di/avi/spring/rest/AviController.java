@@ -101,17 +101,15 @@ public class AviController {
         return new ResultDTO("OK", beat == null ? "" : new String(beat.getData()));
     }
 
-    @RequestMapping(value = "/registerAcc", method = RequestMethod.POST)
-    private ResultDTO registerAcc(@RequestBody RegisterDTO newAcc) {
-        try {
-            User user = hostService.login(Login.of(newAcc.getLogin(), newAcc.getPassword()));
-            String jwt = JWTTokens.token(user);
-            Channel channel = Channel.of(UUID.fromString(newAcc.getUuid()));
-            Beat beat = channelService.get(channel);
-            return new ResultDTO("OK", beat == null ? jwt : "");
-        }
-        catch (Exception e){
+    @RequestMapping(value = "/register_account", method = RequestMethod.POST)
+    private ResultDTO registerAcc(@RequestBody LoginDTO newAcc) {
+        ResultDTO res = login(newAcc);
+        if(res.getData().toString().length() > 0){
             return new ResultDTO("OK", "");
+        } else {
+            User user = hostService.getUser();
+            String jwt = JWTTokens.token(user);
+            return new ResultDTO("OK", jwt);
         }
     }
 }
