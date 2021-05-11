@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AppComponent, AuthorizationDialog} from './app.component';
+import { AppComponent} from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,12 +20,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { KeyringService } from './keyring.service'
 import { ClipboardModule } from 'ngx-clipboard';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KeysComponent,
-    AuthorizationDialog,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +50,6 @@ import { ClipboardModule } from 'ngx-clipboard';
   ],
   providers: [ KeyringService ],
   bootstrap: [ AppComponent ],
-  entryComponents: [ AuthorizationDialog ]
+  entryComponents: [  ]
 })
 export class AppModule { }
