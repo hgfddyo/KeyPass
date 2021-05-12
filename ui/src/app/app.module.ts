@@ -21,12 +21,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { KeyringService } from './keyring.service'
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KeysComponent,
     LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
