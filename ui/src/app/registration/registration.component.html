@@ -1,0 +1,12 @@
+<ng-container [ngTemplateOutlet]="getTemplate">
+
+</ng-container>
+
+<ng-template #LoginTemplate>
+   <h3> Hey, I'm login template</h3>
+   <button (click)="changeTemplate()"> Change Template </button>
+</ng-template>
+
+<ng-template #PasswordTemplate>
+  <h3> Hey, I'm password template</h3>
+</ng-template>
