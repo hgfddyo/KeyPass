@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { Observable } from 'rxjs/Rx'
-import { Subject } from 'rxjs/Subject';
-import { startWith } from 'rxjs/operators/startWith'
-import { combineLatest } from 'rxjs/operators/combineLatest'
-import { merge } from 'rxjs/operators/merge'
-import { map } from 'rxjs/operators/map'
-import { mergeMap } from 'rxjs/operators/mergeMap'
+import { Observable } from 'rxjs'
+import { Subject } from 'rxjs';
+import { startWith } from 'rxjs/operators'
+import { combineLatest } from 'rxjs/operators'
+import { merge } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
+import { mergeMap } from 'rxjs/operators'
 import { Key } from '../key'
-import { MatAutocompleteTrigger } from '@angular/material'
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { KeyringService } from '../keyring.service'
 
 export const copyToClipboard = (url: string) => {
   document.addEventListener('copy', (e: ClipboardEvent) => {
     e.clipboardData.setData('text/plain', url);
     e.preventDefault();
-    document.removeEventListener('copy');
+    document.removeEventListener('copy',null);
   });
   document.execCommand('copy');
 };
@@ -170,3 +170,4 @@ export class KeysComponent implements OnInit, AfterViewInit {
     this.password = password
   }
 }
+
