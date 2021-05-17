@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Account } from '../account'
 import { KeyringService } from '../keyring.service'
 import {v4 as uuidv4} from 'uuid';
-import { min } from 'rxjs/operator/min';
+import { min } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -42,3 +42,4 @@ export class RegistrationComponent implements OnInit {
   }
 
 }
+

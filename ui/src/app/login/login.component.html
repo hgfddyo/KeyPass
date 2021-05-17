@@ -1,12 +1,13 @@
 <ng-container [ngTemplateOutlet]="getTemplate">
+<mat-form-field appearance="outline">
+  <mat-label class="placeholder">Outline form field</mat-label>
+  <input matInput type="text" placeholder="asd" >
 
+</mat-form-field>
 </ng-container>
 
-<ng-template #LoginTemplate>
-   <h3> Hey, I'm login template</h3>
-   <button (click)="changeTemplate()"> Change Template </button>
-</ng-template>
 
 <ng-template #PasswordTemplate>
   <h3> Hey, I'm password template</h3>
 </ng-template>
+

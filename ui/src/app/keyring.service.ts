@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Key } from './key'
-import * as crypto from 'crypto-js'
 import { Account } from './account'
 import { Channel } from './channel'
 import { Setup } from './setup'
 import { Result } from './result'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import {CONFIG} from './app.config'
 
 @Injectable()
