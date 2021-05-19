@@ -46,9 +46,10 @@ export class KeyringService {
     this.keyRing = []
   }
 
-  setAccount(account:Account) {
+    setAccount(account:Account): boolean {
     this.account = account
     let self = this
+    let flag = false
     this.http.post<Result>(this.loginUrl, {
       uuid: self.channelUUID,
       login: account.login,
@@ -63,12 +64,10 @@ export class KeyringService {
           })
         }
         this.loadSetup()
-      } else {
-          alert("Bad Account credentials!")
-          window.location.replace("index.html")
-          localStorage.removeItem('currentAccount');
-      }
+        flag = true
+      } 
     })
+    return flag
   }
 
   registerAccount(account:Account){
