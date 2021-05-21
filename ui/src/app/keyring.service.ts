@@ -29,6 +29,8 @@ export class KeyringService {
   private sign:string
 
   private setup:Setup
+  
+  private checked:boolean
 
   private keyRing:Key[]
 
@@ -40,16 +42,16 @@ export class KeyringService {
     this.registerUrl = CONFIG.apiURL + "/register_account"
     this.channelUUID = "85839ee8-31d0-4cd5-a7d6-7f55637ccc88"
     this.sign = "0a01c2d7-1d72-4712-93dc-6c44adc13c54"
+    this.checked = false
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
     this.keyRing = []
   }
 
-    setAccount(account:Account): boolean {
+    setAccount(account:Account) {
     this.account = account
     let self = this
-    let flag = false
     this.http.post<Result>(this.loginUrl, {
       uuid: self.channelUUID,
       login: account.login,
@@ -63,11 +65,11 @@ export class KeyringService {
             'Authorization': 'Bearer ' + token
           })
         }
+        localStorage.setItem('currentAccount', JSON.stringify(this.account))
+        this.checked = true
         this.loadSetup()
-        flag = true
       } 
     })
-    return flag
   }
 
   registerAccount(account:Account){
@@ -105,6 +107,10 @@ export class KeyringService {
 
   getSetup():Setup {
     return this.setup
+  }
+
+  getChecked():boolean {
+    return this.checked
   }
 
   loadSetup() {
