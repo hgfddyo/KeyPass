@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+.container {
+  margin-top: 40px;
+}
+h2 {
+  font-family: Heebo;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+  align-items: center;
+  color: #2f2f2f;
+  margin-bottom: 50px;
+  margin-left: -10px;
+}
+.enter {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+  color: #000000;
+}
+.main {
+  max-width: 100%;
+}
+.buttonreg {
+  margin-right: 70px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(47, 47, 47, 0.77);
+  background: #ffffff;
+  border: 2px solid rgba(47, 47, 47, 0.77);
+  box-sizing: border-box;
+  border-radius: 6px;
+  height: 30px;
+  width: 130px;
+}
+
+.buttonnext {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+  background: #737070;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 6px;
+  height: 30px;
+  width: 60px;
+}
+
+.buttonback {
+  margin-right: 135px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(47, 47, 47, 0.77);
+  background: #ffffff;
+  border: 2px solid rgba(47, 47, 47, 0.77);
+  box-sizing: border-box;
+  border-radius: 6px;
+  height: 30px;
+  width: 57px;
+}
+.buttonentry {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+  background: #737070;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
