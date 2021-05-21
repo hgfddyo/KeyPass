@@ -1,13 +1,68 @@
 <ng-container [ngTemplateOutlet]="getTemplate">
-
+  <div class="container main">
+    <div class="row d-flex justify-content-center">
+      <div class="col-1">
+        <h2 class="title">Registration</h2>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-2 d-flex justify-content-start">
+        <span class="enter">Enter your login</span>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-2 d-flex justify-content-start">
+        <mat-form-field
+          style="width: 260px; margin-bottom: 20px"
+          appearance="outline"
+        >
+          <mat-label class="placeholder">Login</mat-label>
+          <input style="width: 260px; height: 20px" matInput type="text" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-2 d-flex justify-content-start">
+        <button class="buttonreg" type="button">registration</button>
+        <button class="buttonnext" type="button">next</button>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <ng-template #LoginTemplate>
-   <h3> Hey, I'm login template</h3>
-   <button (click)="changeTemplate()"> Change Template </button>
+  <h3>Hey, I'm login template</h3>
+  <button (click)="changeTemplate()">Change Template</button>
 </ng-template>
 
 <ng-template #PasswordTemplate>
-  <h3> Hey, I'm password template</h3>
+  <div class="container main">
+    <div class="row d-flex justify-content-center">
+      <div class="col-1">
+        <h2 class="title">Registration</h2>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-2 d-flex justify-content-start">
+        <span class="enter">Enter your password</span>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-2 d-flex justify-content-start">
+        <mat-form-field
+          style="width: 260px; margin-bottom: 20px"
+          appearance="outline"
+        >
+          <mat-label class="placeholder">Password</mat-label>
+          <input style="width: 260px; height: 20px" matInput type="text" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-2 d-flex justify-content-start">
+        <button class="buttonback" type="button">Back</button>
+        <button class="buttonentry" type="button">Entry</button>
+      </div>
+    </div>
+  </div>
 </ng-template>
-
