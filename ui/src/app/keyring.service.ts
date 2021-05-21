@@ -49,7 +49,7 @@ export class KeyringService {
     this.keyRing = []
   }
 
-    setAccount(account:Account) {
+  setAccount(account:Account) {
     this.account = account
     let self = this
     this.http.post<Result>(this.loginUrl, {
