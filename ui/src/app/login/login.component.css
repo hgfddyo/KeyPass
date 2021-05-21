@@ -11,9 +11,25 @@ h2 {
   line-height: 26px;
   align-items: center;
   color: #2f2f2f;
-  margin-bottom: 28px;
+  margin-bottom: 50px;
   margin-left: 20px;
 }
+.enter {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+  color: #000000;
+}
+
+.mat-form-field {
+  font-size: 13px;
+}
+
 .main {
   max-width: 100%;
 }
@@ -34,10 +50,13 @@ h2 {
   border: 2px solid rgba(47, 47, 47, 0.77);
   box-sizing: border-box;
   border-radius: 6px;
-  height: 30px;
+  height: 35px;
   width: 130px;
 }
-
+.buttonreg:hover {
+  color: #000000; /* Цвет ссылки при наведении на нее курсора мыши */
+  border: 2px solid #000000;
+}
 .buttonnext {
   font-family: Roboto;
   font-style: normal;
@@ -57,6 +76,10 @@ h2 {
   border-radius: 6px;
   height: 30px;
   width: 60px;
+}
+
+.buttonnext:hover {
+  background-color: #000000; /* Цвет ссылки при наведении на нее курсора мыши */
 }
 
 .buttonback {
