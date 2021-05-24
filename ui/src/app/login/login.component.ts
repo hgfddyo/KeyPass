@@ -63,7 +63,8 @@ export class LoginComponent implements OnInit {
         this.router.navigate(["/keys"])
      } else{
           let dialogRef = this.dialog.open(InformationDialog, {
-            width: '258px'
+            width: '258px',
+            data:"Bad account credentials."
           });
      }
     }, 1000)
@@ -77,7 +78,7 @@ export class LoginComponent implements OnInit {
 
 export class InformationDialog {
 
-  constructor(public dialogRef: MatDialogRef<InformationDialog>) { }
+  constructor(public dialogRef: MatDialogRef<InformationDialog>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   
   close(){
     this.dialogRef.close();
