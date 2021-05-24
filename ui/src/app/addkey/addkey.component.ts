@@ -66,11 +66,11 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
   }
 
   back(){
-   this.location.back()
+    this.location.back()
   }
 
   generate() {
-  let res = new Uint32Array(21)
+    let res = new Uint32Array(21)
     window.crypto.getRandomValues(res)
     let password = ''
     for (var i = 0; i < res.length; i++) {
