@@ -1,8 +1,76 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  margin-top: 10px;
 }
-
-.container > * {
-  width: 100%;
+.main {
+  max-width: 100%;
+}
+.btnall {
+  width: 45px;
+  height: 30px;
+  background: #ffffff;
+  border: 2px solid #737070;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  justify-content: center;
+  color: #737070;
+  margin-left: 70px;
+  margin-top: 30px;
+}
+.btncopy {
+  width: 45px;
+  height: 30px;
+  background: #ffffff;
+  box-sizing: border-box;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  justify-content: center;
+  color: #737070;
+  margin-left: 70px;
+  margin-top: 10px;
+}
+.spacer {
+  margin-left: 120px;
+}
+.col-2 {
+  text-align: center;
+  justify-content: center;
+}
+.btnadd {
+  width: 90px;
+  height: 32px;
+  background: #ffffff;
+  border: 2px solid #737070;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  justify-content: center;
+  color: #737070;
+  margin-right: 75px;
 }
