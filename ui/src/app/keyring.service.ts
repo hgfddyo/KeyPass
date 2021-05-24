@@ -88,6 +88,7 @@ export class KeyringService {
             'Authorization': 'Bearer ' + token
           })
         }
+        this.checked = true
         setTimeout(() => {
           /*
           Adding an empty line to user data to enter a login is implemented in the frontend part of the application, 
@@ -97,11 +98,7 @@ export class KeyringService {
           */ 
           this.rentPlace("")
         }, 1000)
-      } else {
-          alert("this user already exists!")
-          window.location.replace("index.html")
-          localStorage.removeItem('currentAccount')
-      }
+      } 
     })
   }
 
