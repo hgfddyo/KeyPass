@@ -29,6 +29,8 @@ export class KeyringService {
   private sign:string
 
   private setup:Setup
+  
+  private checked:boolean
 
   private keyRing:Key[]
 
@@ -40,6 +42,7 @@ export class KeyringService {
     this.registerUrl = CONFIG.apiURL + "/register_account"
     this.channelUUID = "85839ee8-31d0-4cd5-a7d6-7f55637ccc88"
     this.sign = "0a01c2d7-1d72-4712-93dc-6c44adc13c54"
+    this.checked = false
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
@@ -62,12 +65,10 @@ export class KeyringService {
             'Authorization': 'Bearer ' + token
           })
         }
+        localStorage.setItem('currentAccount', JSON.stringify(this.account))
+        this.checked = true
         this.loadSetup()
-      } else {
-          alert("Bad Account credentials!")
-          window.location.replace("index.html")
-          localStorage.removeItem('currentAccount');
-      }
+      } 
     })
   }
 
@@ -87,6 +88,7 @@ export class KeyringService {
             'Authorization': 'Bearer ' + token
           })
         }
+        this.checked = true
         setTimeout(() => {
           /*
           Adding an empty line to user data to enter a login is implemented in the frontend part of the application, 
@@ -96,16 +98,16 @@ export class KeyringService {
           */ 
           this.rentPlace("")
         }, 1000)
-      } else {
-          alert("this user already exists!")
-          window.location.replace("index.html")
-          localStorage.removeItem('currentAccount')
-      }
+      } 
     })
   }
 
   getSetup():Setup {
     return this.setup
+  }
+
+  getChecked():boolean {
+    return this.checked
   }
 
   loadSetup() {

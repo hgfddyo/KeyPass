@@ -18,10 +18,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 import { KeyringService } from './keyring.service'
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AddkeyComponent } from './addkey/addkey.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { RegistrationComponent } from './registration/registration.component';
     KeysComponent,
     LoginComponent,
     RegistrationComponent,
+    AddkeyComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,9 @@ import { RegistrationComponent } from './registration/registration.component';
     MatIconModule,
     MatDialogModule,
     ClipboardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
+    
   ],
   providers: [ KeyringService ],
   bootstrap: [ AppComponent ],
