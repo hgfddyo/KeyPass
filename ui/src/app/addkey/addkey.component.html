@@ -1,0 +1,19 @@
+<div class="container">
+  <mat-form-field>
+      <input type="text" #contextAutoComplete placeholder="context" aria-label="Number" matInput [formControl]="contextControl" (blur)="selectContext()">
+  </mat-form-field>
+  <mat-form-field>
+      <input type="text" #loginAutoComplete placeholder="login" aria-label="Number" matInput [formControl]="loginControl" (blur)="selectLogin()">
+  </mat-form-field>
+  <mat-form-field>
+      <input type="password" placeholder="password" aria-label="Number" matInput [(ngModel)]="password">
+      
+      <button class="btn" type="button" (click)="generate()">generate</button>
+      
+  </mat-form-field>
+  <button class="btn" type="button" (click)="back()">back</button>
+  <button class="btn" type="button" (click)="save()">save</button>
+  
+</div>
+
+

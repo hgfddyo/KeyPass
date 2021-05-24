@@ -23,6 +23,7 @@ import { KeyringService } from './keyring.service'
 import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AddkeyComponent } from './addkey/addkey.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { RegistrationComponent } from './registration/registration.component';
     KeysComponent,
     LoginComponent,
     RegistrationComponent,
+    AddkeyComponent,
   ],
   imports: [
     BrowserModule,
