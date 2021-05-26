@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import "@angular/compiler";
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent} from './app.component';
@@ -24,6 +24,9 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AddkeyComponent } from './addkey/addkey.component';
+import { KeystableComponent } from './keystable/keystable.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -33,6 +36,7 @@ import { AddkeyComponent } from './addkey/addkey.component';
     LoginComponent,
     RegistrationComponent,
     AddkeyComponent,
+    KeystableComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,9 @@ import { AddkeyComponent } from './addkey/addkey.component';
     MatDialogModule,
     ClipboardModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule
     
   ],
   providers: [ KeyringService ],
