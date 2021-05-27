@@ -19,6 +19,8 @@ export class KeystableComponent implements OnInit {
 
   displayedColumns: string[] = ['context', 'login', 'password', 'show', 'edit', 'delete'];
   dataSource:any
+  check:boolean
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   applyFilter(event: Event) {
@@ -26,12 +28,21 @@ export class KeystableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   constructor(private keyringService : KeyringService) {
+    this.check = false
     this.keyringService.getKeyRing().subscribe(result =>{
       this.dataSource = new MatTableDataSource(result);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.filterPredicate = function(data: any, filterValue: string) {
+        return data.context.trim().toLocaleLowerCase().indexOf(filterValue.trim().toLocaleLowerCase()) >= 0 ||
+        data.login.trim().toLocaleLowerCase().indexOf(filterValue.trim().toLocaleLowerCase()) >= 0;
+      };
       
     })
     
+  }
+
+  show(element){
+    this.check = true
   }
 
   ngOnInit(): void {
