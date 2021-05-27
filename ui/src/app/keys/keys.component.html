@@ -79,8 +79,7 @@
         class="btncopy"
         type="button"
         mat-icon-button
-        ngxClipboard
-        [cbContent]="login"
+        ngxClipboard [cbContent]="loginControl.value"
       >
         <mat-icon mat-icon-button> content_copy </mat-icon>
       </button>
@@ -104,13 +103,13 @@
       </mat-form-field>
     </div>
     <div class="col-1 d-flex justify-content-start">
-      <button class="btncopy" mat-icon-button (click)="save()">
+      <button class="btncopy" mat-icon-button ngxClipboard  [cbContent]="password">
         <mat-icon>content_copy</mat-icon>
       </button>
     </div>
     <div class="row d-flex justify-content-center">
       <div class="col-3 d-flex justify-content-end">
-        <button class="btnadd" type="button">add new</button>
+        <button class="btnadd" type="button"  routerLink="/Addkey">add new</button>
       </div>
     </div>
   </div>
