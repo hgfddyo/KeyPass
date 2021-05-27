@@ -10,7 +10,7 @@
       >
         <span>KEYS RING</span>
         <span class="spacer"></span>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
       </mat-toolbar>
@@ -43,7 +43,7 @@
       </mat-form-field>
     </div>
     <div class="col-1 d-flex justify-content-start">
-      <button class="btnall" type="button">all</button>
+      <button class="btnall" type="button" routerLink="/All_keys">all</button>
     </div>
   </div>
 

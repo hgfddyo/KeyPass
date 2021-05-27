@@ -158,6 +158,11 @@ export class KeysComponent implements OnInit, AfterViewInit {
     }
   }
 
+  logout() {
+    localStorage.removeItem('currentAccount');
+    location.replace('index.html');
+  }
+
   generate() {
   let res = new Uint32Array(21)
     window.crypto.getRandomValues(res)
