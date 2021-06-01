@@ -27,6 +27,7 @@ import { AddkeyComponent } from './addkey/addkey.component';
 import { KeystableComponent } from './keystable/keystable.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { UpdatekeyComponent } from './updatekey/updatekey.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     RegistrationComponent,
     AddkeyComponent,
     KeystableComponent,
+    UpdatekeyComponent,
   ],
   imports: [
     BrowserModule,
