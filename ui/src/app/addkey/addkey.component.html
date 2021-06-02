@@ -10,7 +10,7 @@
       >
         <span>KEYS RING</span>
         <span class="spacer"></span>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
       </mat-toolbar>
@@ -43,7 +43,7 @@
         appearance="outline"
         style="width: 260px; font-size: 12px"
       >
-        <mat-label class="placeholder">context/URL</mat-label>
+        <mat-label class="placeholder">Login</mat-label>
         <input
           type="text"
           #loginAutoComplete
@@ -63,7 +63,7 @@
         appearance="outline"
         style="width: 260px; font-size: 12px"
       >
-        <mat-label class="placeholder">context/URL</mat-label>
+        <mat-label class="placeholder">Password</mat-label>
         <input
           type="password"
           placeholder="password"

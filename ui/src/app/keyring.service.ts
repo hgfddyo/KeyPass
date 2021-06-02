@@ -12,6 +12,8 @@ import {CONFIG} from './app.config'
 export class KeyringService {
   private httpOptions:any
 
+  private updatedKey:Key
+
   private account:Account
 
   private loginUrl:string
@@ -106,6 +108,14 @@ export class KeyringService {
     return this.setup
   }
 
+  setUpdatedKey(key:Key){
+    this.updatedKey = key
+  }
+
+  getUpdatedKey(){
+    return this.updatedKey  
+  }
+
   getChecked():boolean {
     return this.checked
   }
@@ -149,6 +159,23 @@ export class KeyringService {
       let index = keyRing.findIndex(aKey =>
         key.login === aKey.login &&
         key.context === aKey.context)
+      if (index >= 0) {
+        keyRing.splice(index, 1, key)
+      } else {
+        keyRing.push(key)
+      }
+      this.putKeyRing(keyRing)
+    })
+  }
+
+  updateKey(key:Key, oldKey:Key) {
+    this.getKeyRing().subscribe(keyRing => {
+      if(!keyRing) {
+        keyRing = []
+      }
+      let index = keyRing.findIndex(aKey =>
+        oldKey.login === aKey.login &&
+        oldKey.context === aKey.context)
       if (index >= 0) {
         keyRing.splice(index, 1, key)
       } else {
