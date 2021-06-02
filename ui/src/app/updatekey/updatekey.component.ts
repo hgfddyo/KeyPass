@@ -13,11 +13,11 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { KeyringService } from '../keyring.service'
 
 @Component({
-  selector: 'app-addkey',
-  templateUrl: './addkey.component.html',
-  styleUrls: ['./addkey.component.css']
+  selector: 'app-updatekey',
+  templateUrl: './updatekey.component.html',
+  styleUrls: ['./updatekey.component.css']
 })
-export class AddkeyComponent implements OnInit, AfterViewInit {
+export class UpdatekeyComponent implements OnInit {
 
   loginControl: FormControl = new FormControl();
   contextControl: FormControl = new FormControl();
@@ -38,14 +38,20 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
     'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
   ngOnInit() {
-    
+    let key = this.keyringService.getUpdatedKey()
+    this.loginControl.setValue(key.login)
+    this.contextControl.setValue(key.context)
+    this.password = key.password
   }
 
   ngAfterViewInit() {
 
   }
 
-  
+  logout(){
+    localStorage.removeItem('currentAccount');
+    location.replace('index.html');
+  }
 
   selectContext() {
     this.context = this.contextControl.value
@@ -57,20 +63,17 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
 
   save() {
     if(this.loginControl.value && this.contextControl.value && this.password) {
-      this.keyringService.addKey({
+      this.keyringService.updateKey({
         login: this.loginControl.value,
         context: this.contextControl.value,
         password: this.password
-      })
-      this.location.back()
+      }, this.keyringService.getUpdatedKey())
+      setTimeout(() => {
+        this.location.back()
+      }, 200)
     }
   }
 
-  logout(){
-    localStorage.removeItem('currentAccount');
-    location.replace('index.html');
-  }
-  
   back(){
     this.location.back()
   }
@@ -86,4 +89,5 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
     }
     this.password = password
   }
+
 }
