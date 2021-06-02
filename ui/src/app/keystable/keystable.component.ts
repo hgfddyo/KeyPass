@@ -34,7 +34,7 @@ export class KeystableComponent implements OnInit {
 
   constructor(private keyringService : KeyringService, private router: Router) {
     this.keyringService.getKeyRing().subscribe(result =>{
-      this.dataSource = new MatTableDataSource(result);
+      //this.dataSource = new MatTableDataSource(result);
       this.dataSource.paginator = this.paginator;
       this.dataSource.filterPredicate = function(data: any, filterValue: string) {
         return data.context.trim().toLocaleLowerCase().indexOf(filterValue.trim().toLocaleLowerCase()) >= 0 ||
