@@ -62,9 +62,15 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
         context: this.contextControl.value,
         password: this.password
       })
+      this.location.back()
     }
   }
 
+  logout(){
+    localStorage.removeItem('currentAccount');
+    location.replace('index.html');
+  }
+  
   back(){
     this.location.back()
   }

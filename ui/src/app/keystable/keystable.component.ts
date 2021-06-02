@@ -32,7 +32,7 @@ export class KeystableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor(private keyringService : KeyringService) {
+  constructor(private keyringService : KeyringService, private router: Router) {
     this.keyringService.getKeyRing().subscribe(result =>{
       this.dataSource = new MatTableDataSource(result);
       this.dataSource.paginator = this.paginator;
@@ -70,6 +70,11 @@ export class KeystableComponent implements OnInit {
         this.dataSource.data = result
     })
     },100)
+  }
+
+  goToUpdate(element){
+    this.keyringService.setUpdatedKey(element)
+    this.router.navigate(['/Updatekey'])
   }
 
   ngOnInit(): void {

@@ -38,14 +38,20 @@ export class UpdatekeyComponent implements OnInit {
     'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
   ngOnInit() {
-    
+    let key = this.keyringService.getUpdatedKey()
+    this.loginControl.setValue(key.login)
+    this.contextControl.setValue(key.context)
+    this.password = key.password
   }
 
   ngAfterViewInit() {
 
   }
 
-  
+  logout(){
+    localStorage.removeItem('currentAccount');
+    location.replace('index.html');
+  }
 
   selectContext() {
     this.context = this.contextControl.value
@@ -57,11 +63,14 @@ export class UpdatekeyComponent implements OnInit {
 
   save() {
     if(this.loginControl.value && this.contextControl.value && this.password) {
-      this.keyringService.addKey({
+      this.keyringService.updateKey({
         login: this.loginControl.value,
         context: this.contextControl.value,
         password: this.password
-      })
+      }, this.keyringService.getUpdatedKey())
+      setTimeout(() => {
+        this.location.back()
+      }, 200)
     }
   }
 
