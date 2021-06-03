@@ -20,7 +20,7 @@
     <div class="col-1 d-flex justify-content-start">
       <mat-form-field
         appearance="outline"
-        style="width: 260px; margin-top: 20px; font-size: 12px"
+        style="width: 260px; margin-top: 20px; font-size: 14px"
       >
         <mat-label class="placeholder">context/URL</mat-label>
         <input
@@ -79,7 +79,8 @@
         class="btncopy"
         type="button"
         mat-icon-button
-        ngxClipboard [cbContent]="loginControl.value"
+        ngxClipboard
+        [cbContent]="loginControl.value"
       >
         <mat-icon mat-icon-button> content_copy </mat-icon>
       </button>
@@ -103,13 +104,20 @@
       </mat-form-field>
     </div>
     <div class="col-1 d-flex justify-content-start">
-      <button class="btncopy" mat-icon-button ngxClipboard  [cbContent]="password">
+      <button
+        class="btncopy"
+        mat-icon-button
+        ngxClipboard
+        [cbContent]="password"
+      >
         <mat-icon>content_copy</mat-icon>
       </button>
     </div>
     <div class="row d-flex justify-content-center">
       <div class="col-3 d-flex justify-content-end">
-        <button class="btnadd" type="button"  routerLink="/Addkey">add new</button>
+        <button class="btnadd" type="button" routerLink="/Addkey">
+          add new
+        </button>
       </div>
     </div>
   </div>
