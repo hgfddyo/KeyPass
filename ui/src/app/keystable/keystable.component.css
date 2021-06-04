@@ -31,10 +31,6 @@ mat-paginator {
   margin-top: 40px;
   margin-bottom: 60px;
 }
-.password {
-  justify-content: center;
-  text-align: center;
-}
 
 .search {
   width: 90%;
@@ -51,17 +47,14 @@ mat-paginator {
   line-height: 0;
   padding: 0;
 }
-.mat-form-field-wrapper {
-  padding: 0em !important;
-}
 
-.accounts {
+h2 {
   font-family: Heebo;
   font-style: normal;
   font-weight: 500;
   font-size: 22px;
   line-height: 32px;
-  display: flex;
+
   align-items: center;
   text-align: center;
   letter-spacing: 0.04em;
@@ -112,4 +105,14 @@ mat-paginator {
   box-sizing: border-box;
   border-radius: 6px;
   margin-top: 40px;
+}
+.btn {
+  color: #9b8585;
+  font-size: 28px;
+}
+
+.mat-button,
+.mat-icon-button,
+.mat-stroked-button {
+  color: gray !important;
 }

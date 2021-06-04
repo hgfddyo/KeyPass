@@ -33,6 +33,8 @@ export class KeystableComponent implements OnInit {
   }
 
   constructor(private keyringService : KeyringService, private router: Router) {
+    let key =[{context:"1", login:"1", password:"1"}]
+    this.dataSource = new MatTableDataSource(key);
     this.keyringService.getKeyRing().subscribe(result =>{
       //this.dataSource = new MatTableDataSource(result);
       this.dataSource.paginator = this.paginator;
