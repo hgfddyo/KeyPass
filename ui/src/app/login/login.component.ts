@@ -13,7 +13,7 @@ import { FormControl, Validators } from '@angular/forms'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  dialogRef
   loginControl: FormControl = new FormControl('', [Validators.required]);
   passwordControl: FormControl = new FormControl('', [Validators.required]);
   change: boolean
@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   selectLogin(){
     this.account.login = this.loginControl.value
   }
+
   goToRegistration(){
     this.router.navigate(["/Registration"])
   }
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
         }
         this.router.navigate(["/keys"])
      } else{
-          let dialogRef = this.dialog.open(InformationDialog, {
+          this.dialogRef = this.dialog.open(InformationDialog, {
             width: '258px',
             data:"Bad account credentials."
           });
