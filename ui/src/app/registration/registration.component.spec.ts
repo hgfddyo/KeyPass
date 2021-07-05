@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { destroyPlatform } from '@angular/core';
 
-describe('RegistrationComponent', () => {
+xdescribe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let routerSpy;
   let fixture: ComponentFixture<RegistrationComponent>;
