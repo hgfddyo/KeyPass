@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { KeyringService } from './keyring.service';
 
-describe('KeyringService', () => {
+xdescribe('KeyringService', () => {
   let service: KeyringService;
 
   beforeEach(() => {
