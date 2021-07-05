@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { KeystableComponent } from './keystable.component';
 
-describe('KeystableComponent', () => {
+xdescribe('KeystableComponent', () => {
   let component: KeystableComponent;
   let fixture: ComponentFixture<KeystableComponent>;
 

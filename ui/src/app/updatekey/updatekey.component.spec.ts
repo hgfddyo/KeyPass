@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdatekeyComponent } from './updatekey.component';
 
-describe('UpdatekeyComponent', () => {
+xdescribe('UpdatekeyComponent', () => {
   let component: UpdatekeyComponent;
   let fixture: ComponentFixture<UpdatekeyComponent>;
 
