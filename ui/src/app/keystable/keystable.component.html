@@ -9,11 +9,9 @@
     </mat-toolbar>
   </div>
 </div>
-<div class="row d-flex justify-content-center">
-  <div class="col-1">
-    <h2 class="accounts">Accounts</h2>
-  </div>
-</div>
+
+<h2 class="accounts">Accounts</h2>
+
 <div style="font-size: 10px">
   <mat-form-field class="search" appearance="none" mat-icon-button matPreffix>
     <label
@@ -40,20 +38,47 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
   <!-- Context Column -->
   <ng-container matColumnDef="context">
-    <th mat-header-cell *matHeaderCellDef>Context</th>
-    <td mat-cell *matCellDef="let element">{{ element.context }}</td>
+    <th
+      style="width: 25% !important; font-size: 16px"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Context
+    </th>
+    <td style="width: 25% !important" mat-cell *matCellDef="let element">
+      {{ element.context }}
+    </td>
   </ng-container>
 
   <!-- Username Column -->
   <ng-container matColumnDef="login">
-    <th mat-header-cell *matHeaderCellDef>Login</th>
-    <td mat-cell *matCellDef="let element">{{ element.login }}</td>
+    <th
+      style="width: 25% !important; font-size: 16px"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Login
+    </th>
+    <td style="width: 25% !important" mat-cell *matCellDef="let element">
+      {{ element.login }}
+    </td>
   </ng-container>
 
   <!-- Password Column -->
   <ng-container matColumnDef="password">
-    <th mat-header-cell *matHeaderCellDef class="password">Password</th>
-    <td mat-cell *matCellDef="let element">
+    <th
+      style="width: 25% !important; font-size: 16px"
+      mat-header-cell
+      *matHeaderCellDef
+      class="password"
+    >
+      Password
+    </th>
+    <td
+      style="width: 30% !important; font-size: 16px"
+      mat-cell
+      *matCellDef="let element"
+    >
       <mat-form-field appearance="none" class="password">
         <input
           matInput
@@ -67,8 +92,14 @@
   </ng-container>
 
   <ng-container matColumnDef="show">
-    <th mat-header-cell *matHeaderCellDef>3</th>
-    <td mat-cell *matCellDef="let element">
+    <th
+      style="width: 10% !important; font-size: 16px"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      3
+    </th>
+    <td style="width: 10% !important" mat-cell *matCellDef="let element">
       <button
         mat-icon-button
         (click)="show(element)"
@@ -82,8 +113,14 @@
   </ng-container>
 
   <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef>2</th>
-    <td mat-cell *matCellDef="let element">
+    <th
+      style="width: 10% !important; font-size: 16px"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      2
+    </th>
+    <td style="width: 10% !important" mat-cell *matCellDef="let element">
       <button mat-icon-button (click)="logout()" style="margin-left: -15px">
         <mat-icon>edit</mat-icon>
       </button>
@@ -91,8 +128,14 @@
   </ng-container>
 
   <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef>1</th>
-    <td mat-cell *matCellDef="let element">
+    <th
+      style="width: 10% !important; font-size: 16px"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      1
+    </th>
+    <td style="width: 10% !important" mat-cell *matCellDef="let element">
       <button
         mat-icon-button
         (click)="deleteLogin(element)"

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddkeyComponent } from './addkey.component';
 
-describe('AddkeyComponent', () => {
+xdescribe('AddkeyComponent', () => {
   let component: AddkeyComponent;
   let fixture: ComponentFixture<AddkeyComponent>;
 
