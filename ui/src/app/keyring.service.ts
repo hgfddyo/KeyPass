@@ -36,6 +36,15 @@ export class KeyringService {
 
   private keyRing:Key[]
 
+  private passwordVocabulary = [
+    '!', '#', '$', '%', '&', '(', ')', '*', '+', '-',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    ':', ';', '<' ,'=', '>', '?', '@',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
   constructor( private http: HttpClient ) {
     this.loginUrl = CONFIG.apiURL + "/login"
     this.putUrl = CONFIG.apiURL + "/put"
@@ -73,7 +82,7 @@ export class KeyringService {
       } 
     })
   }
-
+  
   registerAccount(account:Account){
     this.account = account
     let self = this
@@ -167,7 +176,7 @@ export class KeyringService {
       this.putKeyRing(keyRing)
     })
   }
-
+  
   updateKey(key:Key, oldKey:Key) {
     this.getKeyRing().subscribe(keyRing => {
       if(!keyRing) {
@@ -178,8 +187,6 @@ export class KeyringService {
         oldKey.context === aKey.context)
       if (index >= 0) {
         keyRing.splice(index, 1, key)
-      } else {
-        keyRing.push(key)
       }
       this.putKeyRing(keyRing)
     })
@@ -208,8 +215,8 @@ export class KeyringService {
       let isDone: boolean = false;
       for(var i = keyRing.length - 1; i >= 0; i--) {
         if(keyRing[i].context === key.context) {
-        keyRing.splice(i, 1);
-        isDone = true
+          keyRing.splice(i, 1);
+          isDone = true
         }
       }
       if(isDone){
@@ -235,5 +242,17 @@ export class KeyringService {
       data:     {content: str},
       sign:     self.sign
     }, this.httpOptions).subscribe()
+  }
+
+    generate() {
+    let res = new Uint32Array(21)
+    window.crypto.getRandomValues(res)
+    let password = ''
+    for (var i = 0; i < res.length; i++) {
+      let code = res[i]
+      let index = code % this.passwordVocabulary.length
+      password = password + this.passwordVocabulary[index]
+    }
+    return password
   }
 }

@@ -21,21 +21,11 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
 
   loginControl: FormControl = new FormControl();
   contextControl: FormControl = new FormControl();
-
   password:string = ''
   context:string = ''
   login:string = ''
 
   constructor(private keyringService: KeyringService, private location: Location) { }
-
-  private passwordVocabulary = [
-    '!', '#', '$', '%', '&', '(', ')', '*', '+', '-',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    ':', ';', '<' ,'=', '>', '?', '@',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
   ngOnInit() {
     
@@ -44,8 +34,6 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
-
-  
 
   selectContext() {
     this.context = this.contextControl.value
@@ -76,14 +64,6 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
   }
 
   generate() {
-    let res = new Uint32Array(21)
-    window.crypto.getRandomValues(res)
-    let password = ''
-    for (var i = 0; i < res.length; i++) {
-      let code = res[i]
-      let index = code % this.passwordVocabulary.length
-      password = password + this.passwordVocabulary[index]
-    }
-    this.password = password
+    this.password = this.keyringService.generate()
   }
 }

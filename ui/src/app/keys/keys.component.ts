@@ -30,7 +30,6 @@ export class KeysComponent implements OnInit, AfterViewInit {
 
   loginControl: FormControl = new FormControl();
   contextControl: FormControl = new FormControl();
-
   password:string = ''
   context:string = ''
   login:string = ''
@@ -46,15 +45,6 @@ export class KeysComponent implements OnInit, AfterViewInit {
 
   loginOptions: Observable<string[]>
   contextOptions: Observable<string[]>
-
-  private passwordVocabulary = [
-    '!', '#', '$', '%', '&', '(', ')', '*', '+', '-',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    ':', ';', '<' ,'=', '>', '?', '@',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
   ngOnInit() {
     this.contextOptions = this.contextControl.valueChanges
@@ -161,18 +151,6 @@ export class KeysComponent implements OnInit, AfterViewInit {
   logout() {
     localStorage.removeItem('currentAccount');
     location.replace('index.html');
-  }
-
-  generate() {
-  let res = new Uint32Array(21)
-    window.crypto.getRandomValues(res)
-    let password = ''
-    for (var i = 0; i < res.length; i++) {
-      let code = res[i]
-      let index = code % this.passwordVocabulary.length
-      password = password + this.passwordVocabulary[index]
-    }
-    this.password = password
   }
 }
 
