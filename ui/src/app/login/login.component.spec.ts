@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { destroyPlatform } from '@angular/core';
 
-xdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let routerSpy;
   let fixture: ComponentFixture<LoginComponent>;
@@ -49,6 +49,7 @@ xdescribe('LoginComponent', () => {
   });
 
   afterEach(() => {
+    localStorage.removeItem("currentAccount")
     let template = fixture.nativeElement as HTMLElement;
     template.remove()
     component.dialog.closeAll()

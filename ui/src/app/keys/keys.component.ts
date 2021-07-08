@@ -10,6 +10,7 @@ import { mergeMap } from 'rxjs/operators'
 import { Key } from '../key'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { KeyringService } from '../keyring.service'
+import { Router } from '@angular/router';
 
 export const copyToClipboard = (url: string) => {
   document.addEventListener('copy', (e: ClipboardEvent) => {
@@ -41,7 +42,7 @@ export class KeysComponent implements OnInit, AfterViewInit {
   @ViewChild('loginAutoComplete', { read: MatAutocompleteTrigger })
     loginAutoComplete: MatAutocompleteTrigger
 
-  constructor(private keyringService: KeyringService) { }
+  constructor(private keyringService: KeyringService, private router: Router) { }
 
   loginOptions: Observable<string[]>
   contextOptions: Observable<string[]>
@@ -112,45 +113,17 @@ export class KeysComponent implements OnInit, AfterViewInit {
     }
   }
 
-  save() {
-    if(this.loginControl.value && this.contextControl.value) {
-      this.keyringService.addKey({
-        login: this.loginControl.value,
-        context: this.contextControl.value,
-        password: this.password
-      })
-    }
+  goToAddKey(){
+    this.router.navigate(["/Addkey"])
   }
 
-  deleteLogin(){
-   if(this.loginControl.value && this.contextControl.value) {
-      this.keyringService.deleteKey({
-        login: this.loginControl.value,
-        context: this.contextControl.value,
-        password: this.password
-      })
-      this.password = ''
-      this.loginControl.setValue('')
-    }
-  }
-
-  deleteContext(){
-    if(this.contextControl.value) {
-      this.keyringService.deleteKeysOfContext({
-        login: this.loginControl.value,
-        context: this.contextControl.value,
-        password: this.password
-      })
-
-      this.contextControl.setValue('')
-      this.loginControl.setValue('')
-      this.password = ''
-    }
+  goToAllKeys(){
+    this.router.navigate(["/All_keys"])
   }
 
   logout() {
     localStorage.removeItem('currentAccount');
-    location.replace('index.html');
+    this.router.navigate(['/Login'])
   }
 }
 

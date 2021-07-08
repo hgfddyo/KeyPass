@@ -43,7 +43,7 @@
       </mat-form-field>
     </div>
     <div class="col-1 d-flex justify-content-start">
-      <button class="btnall" type="button" routerLink="/All_keys">all</button>
+      <button class="btnall" type="button" (click)="goToAllKeys()">all</button>
     </div>
   </div>
 
@@ -115,7 +115,7 @@
     </div>
     <div class="row d-flex justify-content-center">
       <div class="col-3 d-flex justify-content-end">
-        <button class="btnadd" type="button" routerLink="/Addkey">
+        <button class="btnadd" type="button"(click)="goToAddKey()">
           add new
         </button>
       </div>
