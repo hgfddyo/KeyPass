@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators'
 import { mergeMap } from 'rxjs/operators'
 import { Key } from '../key'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
+import { Router } from '@angular/router';
 import { KeyringService } from '../keyring.service'
 
 @Component({
@@ -25,7 +26,7 @@ export class UpdatekeyComponent implements OnInit {
   context:string = ''
   login:string = ''
 
-  constructor(private keyringService: KeyringService, private location: Location) { }
+  constructor(private keyringService: KeyringService, private location: Location, private router: Router) { }
 
   ngOnInit() {
     let key = this.keyringService.getUpdatedKey()
@@ -40,7 +41,7 @@ export class UpdatekeyComponent implements OnInit {
 
   logout(){
     localStorage.removeItem('currentAccount');
-    location.replace('index.html');
+    this.router.navigate(["/Login"])
   }
 
   selectContext() {
