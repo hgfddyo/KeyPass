@@ -11,6 +11,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatInput} from '@angular/material/input'
 import {MatCheckbox} from '@angular/material/checkbox'
 import { MatButton } from '@angular/material/button';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class KeystableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor(private keyringService : KeyringService, private router: Router) {
+  constructor(private keyringService : KeyringService, private router: Router, private location: Location) {
       this.keyringService.getKeyRing().subscribe(result =>{
       this.dataSource = new MatTableDataSource(result);
       this.dataSource.paginator = this.paginator;
@@ -55,8 +56,7 @@ export class KeystableComponent implements OnInit {
     } else{
         input.type = 'text'
         editIcons[0].innerText='visibility_off'   
-    }
-    
+    }  
   }
 
   deleteLogin(element){
@@ -74,11 +74,24 @@ export class KeystableComponent implements OnInit {
 
   goToUpdate(element){
     this.keyringService.setUpdatedKey(element)
-    this.router.navigate(['/Updatekey'])
+    this.router.navigate(["/Updatekey"])
   }
 
   ngOnInit(): void {
 
+  }
+
+  logout() {
+    localStorage.removeItem('currentAccount');
+    this.router.navigate(["/Login"])
+  }
+
+  goBack(){
+    this.location.back()
+  }
+
+  goToAddkey(){
+    this.router.navigate(["/Addkey"])
   }
 
 }
