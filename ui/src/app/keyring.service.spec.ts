@@ -89,7 +89,7 @@ describe('KeyringService', () => {
   });
 
   it('should correct add key ', () => {
-    service.addKey({context:'1', login: '1', password: '1'}) 
+    service.addKey({context:'1', login: '1', password: '1'})
     const addKeyRequest = httpController.expectOne(CONFIG.apiURL.concat("/put"))
     expect(addKeyRequest.request.method).toBe("POST")
     let json = JSON.stringify([{context:'1', login: '1', password: '1'}])
@@ -165,7 +165,7 @@ describe('KeyringService', () => {
 
   it('should set account in local storage if it exists ', () => {
     service.setAccount({login: "1", password: "2"})
-    let loginRequest = httpController.expectOne(CONFIG.apiURL.concat("/login")) 
+    let loginRequest = httpController.expectOne(CONFIG.apiURL.concat("/login"))
     expect(loginRequest.request.method).toBe("POST")
     expect(loginRequest.request.body.login).toBe("1")
     expect(loginRequest.request.body.password).toBe("2")
@@ -173,24 +173,24 @@ describe('KeyringService', () => {
     let setup = httpController.expectOne(CONFIG.apiURL.concat("/setup"))
     expect(setup.request.headers.get("Authorization")).toEqual("Bearer token123123")
     let curAccount = localStorage.getItem("currentAccount")
-    expect(curAccount).toBe('{"login":"1","password":"2"}') 
+    expect(curAccount).toBe('{"login":"1","password":"2"}')
   });
 
   it('should not set account in local storage if it not exists ', () => {
     service.setAccount({login: "1", password: "2"})
-    let loginRequest = httpController.expectOne(CONFIG.apiURL.concat("/login")) 
+    let loginRequest = httpController.expectOne(CONFIG.apiURL.concat("/login"))
     expect(loginRequest.request.method).toBe("POST")
     expect(loginRequest.request.body.login).toBe("1")
     expect(loginRequest.request.body.password).toBe("2")
     loginRequest.flush({data: ""})
     let setup = httpController.expectNone(CONFIG.apiURL.concat("/setup"))
     let curAccount = localStorage.getItem("currentAccount")
-    expect(curAccount).toBe(null) 
+    expect(curAccount).toBe(null)
   });
 
   it('should register account if it not exists ', fakeAsync(() => {
     service.registerAccount({login: "1", password: "2"})
-    let registerRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account")) 
+    let registerRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account"))
     expect(registerRequest.request.method).toBe("POST")
     expect(registerRequest.request.body.login).toBe("1")
     expect(registerRequest.request.body.password).toBe("2")
@@ -199,12 +199,12 @@ describe('KeyringService', () => {
     let rentPlaceRequest = httpController.expectOne(CONFIG.apiURL.concat("/put"))
     expect(rentPlaceRequest.request.headers.get("Authorization")).toEqual("Bearer token123123")
     let curAccount = localStorage.getItem("currentAccount")
-    expect(curAccount).toBe('{"login":"1","password":"2"}') 
+    expect(curAccount).toBe('{"login":"1","password":"2"}')
   }));
 
   it('should not register account if it exists ', fakeAsync(() => {
     service.registerAccount({login: "1", password: "2"})
-    let registerRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account")) 
+    let registerRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account"))
     expect(registerRequest.request.method).toBe("POST")
     expect(registerRequest.request.body.login).toBe("1")
     expect(registerRequest.request.body.password).toBe("2")
@@ -212,10 +212,6 @@ describe('KeyringService', () => {
     tick(1200)
     let rentPlaceRequest = httpController.expectNone(CONFIG.apiURL.concat("/put"))
     let curAccount = localStorage.getItem("currentAccount")
-    expect(curAccount).toBe(null) 
+    expect(curAccount).toBe(null)
   }));
-
-
-  
-
 });
