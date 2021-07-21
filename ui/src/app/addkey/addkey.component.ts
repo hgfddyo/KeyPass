@@ -11,6 +11,7 @@ import { mergeMap } from 'rxjs/operators'
 import { Key } from '../key'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { KeyringService } from '../keyring.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addkey',
@@ -25,10 +26,10 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
   context:string = ''
   login:string = ''
 
-  constructor(private keyringService: KeyringService, private location: Location) { }
+  constructor(private keyringService: KeyringService, private location: Location, private router:Router) { }
 
   ngOnInit() {
-    
+
   }
 
   ngAfterViewInit() {
@@ -56,9 +57,9 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
 
   logout(){
     localStorage.removeItem('currentAccount');
-    location.replace('index.html');
+    this.router.navigate(["/Login"])
   }
-  
+
   back(){
     this.location.back()
   }
