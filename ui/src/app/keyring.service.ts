@@ -99,6 +99,7 @@ export class KeyringService {
             'Authorization': 'Bearer ' + token
           })
         }
+        localStorage.setItem('currentAccount', JSON.stringify(this.account))
         this.checked = true
         setTimeout(() => {
           /*
@@ -132,13 +133,13 @@ export class KeyringService {
   loadSetup() {
     let self = this
     this.http.get<Result>(this.setupUrl, this.httpOptions).subscribe(result => {
-        self.setup = result['data']
+      self.setup = result['data']
     })
   }
 
   setSetup(setup:Setup) {
-      this.setup = setup
-      this.http.post<Result>(this.setupUrl, setup, this.httpOptions).subscribe()
+    this.setup = setup
+    this.http.post<Result>(this.setupUrl, setup, this.httpOptions).subscribe()
   }
 
   getKeyRing():Observable<Key[]> {
@@ -244,7 +245,7 @@ export class KeyringService {
     }, this.httpOptions).subscribe()
   }
 
-    generate() {
+  generate() {
     let res = new Uint32Array(21)
     window.crypto.getRandomValues(res)
     let password = ''
