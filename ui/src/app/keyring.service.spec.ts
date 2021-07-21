@@ -190,11 +190,11 @@ describe('KeyringService', () => {
 
   it('should register account if it not exists ', fakeAsync(() => {
     service.registerAccount({login: "1", password: "2"})
-    let loginRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account")) 
-    expect(loginRequest.request.method).toBe("POST")
-    expect(loginRequest.request.body.login).toBe("1")
-    expect(loginRequest.request.body.password).toBe("2")
-    loginRequest.flush({data: "token123123"})
+    let registerRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account")) 
+    expect(registerRequest.request.method).toBe("POST")
+    expect(registerRequest.request.body.login).toBe("1")
+    expect(registerRequest.request.body.password).toBe("2")
+    registerRequest.flush({data: "token123123"})
     tick(1200)
     let rentPlaceRequest = httpController.expectOne(CONFIG.apiURL.concat("/put"))
     expect(rentPlaceRequest.request.headers.get("Authorization")).toEqual("Bearer token123123")
@@ -204,11 +204,11 @@ describe('KeyringService', () => {
 
   it('should not register account if it exists ', fakeAsync(() => {
     service.registerAccount({login: "1", password: "2"})
-    let loginRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account")) 
-    expect(loginRequest.request.method).toBe("POST")
-    expect(loginRequest.request.body.login).toBe("1")
-    expect(loginRequest.request.body.password).toBe("2")
-    loginRequest.flush({data: ""})
+    let registerRequest = httpController.expectOne(CONFIG.apiURL.concat("/register_account")) 
+    expect(registerRequest.request.method).toBe("POST")
+    expect(registerRequest.request.body.login).toBe("1")
+    expect(registerRequest.request.body.password).toBe("2")
+    registerRequest.flush({data: ""})
     tick(1200)
     let rentPlaceRequest = httpController.expectNone(CONFIG.apiURL.concat("/put"))
     let curAccount = localStorage.getItem("currentAccount")
