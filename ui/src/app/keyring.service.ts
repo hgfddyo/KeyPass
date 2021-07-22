@@ -31,8 +31,6 @@ export class KeyringService {
   private sign:string
 
   private setup:Setup
-  
-  private checked:boolean
 
   private keyRing:Key[]
 
@@ -53,64 +51,83 @@ export class KeyringService {
     this.registerUrl = CONFIG.apiURL + "/register_account"
     this.channelUUID = "85839ee8-31d0-4cd5-a7d6-7f55637ccc88"
     this.sign = "0a01c2d7-1d72-4712-93dc-6c44adc13c54"
-    this.checked = false
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
     this.keyRing = []
   }
-
-  setAccount(account:Account) {
-    this.account = account
-    let self = this
-    this.http.post<Result>(this.loginUrl, {
-      uuid: self.channelUUID,
-      login: account.login,
-      password: account.password
-    }, this.httpOptions).subscribe(result => {
-      let token = <string>result['data']
-      if(token.length > 0){
-        this.httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          })
+  //TODO: обернуть все в observable??
+  setAccount(account:Account):Observable<boolean> {
+    return new Observable(observer => {
+      this.account = account
+      let self = this
+      this.http.post<Result>(this.loginUrl, {
+        uuid: self.channelUUID,
+        login: account.login,
+        password: account.password
+      }, this.httpOptions).subscribe(result => {
+        let token = <string>result['data']
+        if(token.length > 0 && token){
+          this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            }) 
+          }
+          localStorage.setItem('currentAccount', JSON.stringify(this.account))
+          observer.next(true)
+          observer.complete()
+          this.loadSetup()
         }
-        localStorage.setItem('currentAccount', JSON.stringify(this.account))
-        this.checked = true
-        this.loadSetup()
-      } 
+        else{
+          this.httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+          }
+          observer.next(false)
+          observer.complete()
+        } 
+      })
     })
   }
-  
-  registerAccount(account:Account){
-    this.account = account
-    let self = this
-    this.http.post<Result>(this.registerUrl, {
-      uuid: self.channelUUID,
-      login: account.login,
-      password: account.password
-      }, this.httpOptions).subscribe(result => {
-      let token = <string>result['data']
-      if(token.length > 0){
-        this.httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          })
+  //BUG: при регистрации регистрирует существующего юзера при неверном пароле и меняет пароль, стирает все аккаунты
+  registerAccount(account:Account):Observable<boolean>{
+    return new Observable(observer => {
+      this.account = account
+      let self = this
+      this.http.post<Result>(this.registerUrl, {
+        uuid: self.channelUUID,
+        login: account.login,
+        password: account.password
+        }, this.httpOptions).subscribe(result => {
+        let token = <string>result['data']
+        if(token.length > 0 && token){
+          this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            })
+          }
+          localStorage.setItem('currentAccount', JSON.stringify(this.account))
+          observer.next(true)
+          observer.complete()
+          setTimeout(() => {
+            /*
+            Adding an empty line to user data to enter a login is implemented in the frontend part of the application, 
+            because to add data to the user in the backend part, 
+            it is necessary that the settings have already been specified when adding data, 
+            at the current moment the settings are transferred to the application after a period of time after entering the credentials of user.
+            */ 
+            this.rentPlace("")
+          }, 1000)
         }
-        localStorage.setItem('currentAccount', JSON.stringify(this.account))
-        this.checked = true
-        setTimeout(() => {
-          /*
-          Adding an empty line to user data to enter a login is implemented in the frontend part of the application, 
-          because to add data to the user in the backend part, 
-          it is necessary that the settings have already been specified when adding data, 
-          at the current moment the settings are transferred to the application after a period of time after entering the credentials of user.
-          */ 
-          this.rentPlace("")
-        }, 1000)
-      } 
+        else{
+          this.httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+          }
+          observer.next(false)
+          observer.complete()
+        } 
+      })
     })
   }
 
@@ -124,10 +141,6 @@ export class KeyringService {
 
   getUpdatedKey(){
     return this.updatedKey  
-  }
-
-  getChecked():boolean {
-    return this.checked
   }
 
   loadSetup() {

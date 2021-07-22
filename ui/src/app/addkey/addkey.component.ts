@@ -51,7 +51,9 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
         context: this.contextControl.value,
         password: this.password
       })
-      this.location.back()
+      setTimeout(() => {
+        this.location.back()
+      }, 200)
     }
   }
 
