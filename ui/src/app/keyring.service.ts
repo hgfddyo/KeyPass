@@ -7,6 +7,7 @@ import { Setup } from './setup'
 import { Result } from './result'
 import { Observable } from 'rxjs';
 import {CONFIG} from './app.config'
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class KeyringService {
@@ -76,7 +77,15 @@ export class KeyringService {
           }
           localStorage.setItem('currentAccount', JSON.stringify(this.account))
           this.loadSetup().subscribe(setup => {
-            this.setup = setup
+            if(!setup){
+              let myUUID = uuidv4()
+              this.setSetup({device: myUUID, partition: "min"}).subscribe(result => {
+                this.setup = {device: myUUID, partition: "min"}
+              })
+            }
+            else {
+              this.setup = setup
+            } 
             observer.next(true)
             observer.complete()
           })
@@ -110,10 +119,25 @@ export class KeyringService {
             })
           }
           localStorage.setItem('currentAccount', JSON.stringify(this.account))
-          this.rentPlace("").subscribe(rent => {
-            observer.next(true)
-            observer.complete()
-          })
+          this.loadSetup().subscribe(setup => {
+            if(!setup){
+              let myUUID = uuidv4()
+              this.setSetup({device: myUUID, partition: "min"}).subscribe(result => {
+                this.setup = {device: myUUID, partition: "min"}
+                this.rentPlace("").subscribe(result => {
+                  observer.next(true)
+                  observer.complete()
+                }) 
+              })
+            }
+            else {
+              this.setup = setup
+              this.rentPlace("").subscribe(result => {
+                observer.next(true)
+                observer.complete()
+              }) 
+            }
+          })  
         }
         else{
           this.httpOptions = {

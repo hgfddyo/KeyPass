@@ -54,16 +54,7 @@ export class RegistrationComponent implements OnInit {
     if(this.loginControl.value && this.passwordControl.value){
       this.keyringService.registerAccount(this.account).subscribe(result =>{
         if(result){
-          let settings = this.keyringService.getSetup()
-          if(!settings) {
-            let myuuid = uuidv4()
-            this.keyringService.setSetup({device: myuuid, partition: "min"}).subscribe(result => {
-              this.router.navigate(["/keys"])
-            });
-          }
-          else{
-            this.router.navigate(["/keys"]) 
-          }   
+          this.router.navigate(["/keys"])  
         }
         else{
           let dialogRef = this.dialog.open(InformationDialog, {
