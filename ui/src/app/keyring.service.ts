@@ -75,9 +75,11 @@ export class KeyringService {
             }) 
           }
           localStorage.setItem('currentAccount', JSON.stringify(this.account))
-          observer.next(true)
-          observer.complete()
-          this.loadSetup()
+          this.loadSetup().subscribe(setup => {
+            this.setup = setup
+            observer.next(true)
+            observer.complete()
+          })
         }
         else{
           this.httpOptions = {
@@ -108,17 +110,10 @@ export class KeyringService {
             })
           }
           localStorage.setItem('currentAccount', JSON.stringify(this.account))
-          observer.next(true)
-          observer.complete()
-          setTimeout(() => {
-            /*
-            Adding an empty line to user data to enter a login is implemented in the frontend part of the application, 
-            because to add data to the user in the backend part, 
-            it is necessary that the settings have already been specified when adding data, 
-            at the current moment the settings are transferred to the application after a period of time after entering the credentials of user.
-            */ 
-            this.rentPlace("")
-          }, 1000)
+          this.rentPlace("").subscribe(rent => {
+            observer.next(true)
+            observer.complete()
+          })
         }
         else{
           this.httpOptions = {
@@ -143,16 +138,23 @@ export class KeyringService {
     return this.updatedKey  
   }
 
-  loadSetup() {
-    let self = this
-    this.http.get<Result>(this.setupUrl, this.httpOptions).subscribe(result => {
-      self.setup = result['data']
+  loadSetup():Observable<Setup> {
+    return new Observable(observer =>{
+      this.http.get<Result>(this.setupUrl, this.httpOptions).subscribe(result => {
+        observer.next(result['data'])
+        observer.complete()
+      })
     })
   }
 
-  setSetup(setup:Setup) {
-    this.setup = setup
-    this.http.post<Result>(this.setupUrl, setup, this.httpOptions).subscribe()
+  setSetup(setup:Setup):Observable<boolean> {
+    return new Observable(observer =>{
+      this.setup = setup
+      this.http.post<Result>(this.setupUrl, setup, this.httpOptions).subscribe(result => {
+        observer.next(true)
+        observer.complete()
+      })
+    })
   }
 
   getKeyRing():Observable<Key[]> {
@@ -174,88 +176,118 @@ export class KeyringService {
     })
   }
 
-  addKey(key:Key) {
-    this.getKeyRing().subscribe(keyRing => {
-      if(!keyRing) {
-        keyRing = []
-      }
-      let index = keyRing.findIndex(aKey =>
-        key.login === aKey.login &&
-        key.context === aKey.context)
-      if (index >= 0) {
-        keyRing.splice(index, 1, key)
-      } else {
-        keyRing.push(key)
-      }
-      this.putKeyRing(keyRing)
+  addKey(key:Key):Observable<Boolean> {
+    return new Observable(observer => {
+      this.getKeyRing().subscribe(keyRing => {
+        if(!keyRing) {
+          keyRing = []
+        }
+        let index = keyRing.findIndex(aKey =>
+          key.login === aKey.login &&
+          key.context === aKey.context)
+        if (index >= 0) {
+          keyRing.splice(index, 1, key)
+        } else {
+          keyRing.push(key)
+        }
+        this.putKeyRing(keyRing).subscribe(result => {
+          observer.next(true)
+          observer.complete()
+        })
+      })
     })
   }
   
-  updateKey(key:Key, oldKey:Key) {
-    this.getKeyRing().subscribe(keyRing => {
-      if(!keyRing) {
-        keyRing = []
-      }
-      let index = keyRing.findIndex(aKey =>
-        oldKey.login === aKey.login &&
-        oldKey.context === aKey.context)
-      if (index >= 0) {
-        keyRing.splice(index, 1, key)
-      }
-      this.putKeyRing(keyRing)
-    })
-  }
-
-  deleteKey(key:Key) {
-    this.getKeyRing().subscribe(keyRing => {
-      if(!keyRing) {
-        keyRing = []
-      }
-      let index = keyRing.findIndex(aKey =>
-        key.login === aKey.login &&
-        key.context === aKey.context)
-      if (index >= 0) {
-        keyRing.splice(index, 1)
-        this.putKeyRing(keyRing)
-      }
-    })
-  }
-
-  deleteKeysOfContext(key:Key) {
-    this.getKeyRing().subscribe(keyRing => {
-      if(!keyRing) {
-        keyRing = []
-      }
-      let isDone: boolean = false;
-      for(var i = keyRing.length - 1; i >= 0; i--) {
-        if(keyRing[i].context === key.context) {
-          keyRing.splice(i, 1);
-          isDone = true
+  updateKey(key:Key, oldKey:Key):Observable<Boolean> {
+    return new Observable(observer => {
+      this.getKeyRing().subscribe(keyRing => {
+        if(!keyRing) {
+          keyRing = []
         }
-      }
-      if(isDone){
-        this.putKeyRing(keyRing)
-      }
+        let index = keyRing.findIndex(aKey =>
+          oldKey.login === aKey.login &&
+          oldKey.context === aKey.context)
+        if (index >= 0) {
+          keyRing.splice(index, 1, key)
+        }
+        this.putKeyRing(keyRing).subscribe(result => {
+          observer.next(true)
+          observer.complete()
+        })
+      })
     })
   }
 
-  putKeyRing(keyRing:Key[]) {
-    let json = JSON.stringify(keyRing)
-    let self = this
-    this.http.post<Result>(this.putUrl, {
-      channel:  {uuid: this.channelUUID},
-      data:     {content: json},
-      sign:     self.sign
-    }, this.httpOptions).subscribe()
+  deleteKey(key:Key):Observable<Boolean> {
+    return new Observable(observer => {
+      this.getKeyRing().subscribe(keyRing => {
+        if(!keyRing) {
+          keyRing = []
+        }
+        let index = keyRing.findIndex(aKey =>
+          key.login === aKey.login &&
+          key.context === aKey.context)
+        if (index >= 0) {
+          keyRing.splice(index, 1)
+          this.putKeyRing(keyRing).subscribe(result => {
+          observer.next(true)
+          observer.complete()
+          })
+        }
+      })
+    })
   }
 
-  rentPlace(str:String) {
-    let self = this
-    this.http.post<Result>(this.putUrl, {
-      channel:  {uuid: this.channelUUID},
-      data:     {content: str},
-      sign:     self.sign
-    }, this.httpOptions).subscribe()
+  deleteKeysOfContext(key:Key):Observable<Boolean> {
+    return new Observable(observer => {
+      this.getKeyRing().subscribe(keyRing => {
+        if(!keyRing) {
+          keyRing = []
+        }
+        let isDone: boolean = false;
+        for(var i = keyRing.length - 1; i >= 0; i--) {
+          if(keyRing[i].context === key.context) {
+            keyRing.splice(i, 1);
+            isDone = true
+          }
+        }
+        if(isDone){
+          this.putKeyRing(keyRing).subscribe(result => {
+          observer.next(true)
+          observer.complete()
+          })
+        }
+      })
+    })
+  }
+
+  putKeyRing(keyRing:Key[]):Observable<Boolean> {
+    return new Observable(observer => {
+      let json = JSON.stringify(keyRing)
+      let self = this
+      this.http.post<Result>(this.putUrl, {
+        channel:  {uuid: this.channelUUID},
+        data:     {content: json},
+        sign:     self.sign
+      }, this.httpOptions).subscribe(result => {
+        observer.next(true)
+        observer.complete()
+      })
+    })
+  }
+
+  rentPlace(str:String):Observable<Boolean> {
+    return new Observable(observer => {
+      let self = this
+      this.http.post<Result>(this.putUrl, {
+        channel:  {uuid: this.channelUUID},
+        data:     {content: str},
+        sign:     self.sign
+      }, this.httpOptions).subscribe(result => {
+        observer.next(true)
+        observer.complete()
+      })
+    })
   }
 
   generate() {

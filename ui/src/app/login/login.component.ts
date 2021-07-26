@@ -34,8 +34,9 @@ export class LoginComponent implements OnInit {
     let account = JSON.parse(localStorage.getItem('currentAccount'));
     if(account){
       this.account = account
-      this.keyringService.setAccount(this.account).subscribe()
-      this.router.navigate(["/keys"])
+      this.keyringService.setAccount(this.account).subscribe(result => {
+        this.router.navigate(["/keys"])
+      })  
     } 
   }
   selectPassword(){
@@ -55,11 +56,15 @@ export class LoginComponent implements OnInit {
       this.keyringService.setAccount(this.account).subscribe(result =>{
         if(result){
           let settings = this.keyringService.getSetup()
-          if(!settings) {
+          if(!settings){
             let myuuid = uuidv4()
-            this.keyringService.setSetup({device: myuuid, partition: "min"});
+            this.keyringService.setSetup({device: myuuid, partition: "min"}).subscribe(result =>{
+              this.router.navigate(["/keys"])
+            });
           }
-          this.router.navigate(["/keys"])
+          else{
+            this.router.navigate(["/keys"]) 
+          } 
         }
         else{
           this.dialogRef = this.dialog.open(InformationDialog, {

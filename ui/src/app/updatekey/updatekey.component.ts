@@ -58,10 +58,9 @@ export class UpdatekeyComponent implements OnInit {
         login: this.loginControl.value,
         context: this.contextControl.value,
         password: this.password
-      }, this.keyringService.getUpdatedKey())
-      setTimeout(() => {
+      }, this.keyringService.getUpdatedKey()).subscribe(result => {
         this.location.back()
-      }, 200)
+      })
     }
   }
 
