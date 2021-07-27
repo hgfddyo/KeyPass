@@ -110,6 +110,7 @@ describe('KeystableComponent', () => {
 
   it('should call deleteKey() method on deleteLogin() method', () => {
     keys =[{context:"1", login:"1", password:"1"}]
+    fakeKeyringService.deleteKey.and.returnValue(of(true))
     component.deleteLogin(keys[0])
     expect(fakeKeyringService.getKeyRing).toHaveBeenCalled()
     expect(fakeKeyringService.deleteKey).toHaveBeenCalledWith(keys[0])

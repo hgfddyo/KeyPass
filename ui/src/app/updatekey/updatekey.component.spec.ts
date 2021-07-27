@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 
 import { UpdatekeyComponent } from './updatekey.component';
+import { of } from 'rxjs';
 
 describe('UpdatekeyComponent', () => {
   let component: UpdatekeyComponent;
@@ -98,14 +99,14 @@ describe('UpdatekeyComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(["/Login"])
   });
 
-  it('should call updateKey method with new key and go to previous location', fakeAsync(() => {
+  it('should call updateKey method with new key and go to previous location', () => {
     component.contextControl.setValue("2")
     component.loginControl.setValue("2")
     component.password = "2"
     fixture.detectChanges()
+    fakeKeyringService.updateKey.and.returnValue(of(true))
     component.save()
-    tick(200)
     expect(fakeKeyringService.updateKey).toHaveBeenCalledWith({login: "2", context: "2", password: "2"}, keys[0])
     expect(locationSpy.back).toHaveBeenCalled()
-  }));
+  });
 });
