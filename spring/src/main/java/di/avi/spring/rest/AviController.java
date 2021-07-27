@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class AviController {
     private HostService hostService;
     private ChannelService channelService;
+    private boolean wrongPass;
 
     @Value("${application.key}")
     private String applicationKey;
@@ -28,11 +29,13 @@ public class AviController {
                          ChannelService channelService) {
         this.hostService = hostService;
         this.channelService = channelService;
+        this.wrongPass = false;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     private ResultDTO login(@RequestBody LoginDTO login) {
         try {
+            this.wrongPass = false;
             User user = hostService.login(Login.of(login.getLogin(), login.getPassword()));
             String jwt = JWTTokens.token(user);
             Channel channel = Channel.of(UUID.fromString(login.getUuid()));
@@ -40,6 +43,7 @@ public class AviController {
             return new ResultDTO("OK", beat == null ? "" : jwt);
         }
         catch (Exception e){
+            this.wrongPass = true;
             return new ResultDTO("OK", "");
         }
     }
@@ -104,7 +108,7 @@ public class AviController {
     @RequestMapping(value = "/register_account", method = RequestMethod.POST)
     private ResultDTO registerAcc(@RequestBody LoginDTO newAcc) {
         ResultDTO res = login(newAcc);
-        if(res.getData().toString().length() > 0){
+        if(res.getData().toString().length() > 0 || this.wrongPass){
             return new ResultDTO("OK", "");
         } else {
             User user = hostService.getUser();
