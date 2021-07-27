@@ -50,8 +50,9 @@ export class AddkeyComponent implements OnInit, AfterViewInit {
         login: this.loginControl.value,
         context: this.contextControl.value,
         password: this.password
+      }).subscribe(result => {
+        this.location.back()
       })
-      this.location.back()
     }
   }
 

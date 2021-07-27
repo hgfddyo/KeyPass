@@ -34,8 +34,9 @@ export class LoginComponent implements OnInit {
     let account = JSON.parse(localStorage.getItem('currentAccount'));
     if(account){
       this.account = account
-      this.keyringService.setAccount(this.account)
-      this.router.navigate(["/keys"])
+      this.keyringService.setAccount(this.account).subscribe(result => {
+        this.router.navigate(["/keys"])
+      })  
     } 
   }
   selectPassword(){
@@ -52,23 +53,18 @@ export class LoginComponent implements OnInit {
 
   Login(){
     if(this.loginControl.value && this.passwordControl.value){
-      this.keyringService.setAccount(this.account)
-    } 
-    setTimeout(() => {
-      if(this.keyringService.getChecked()){
-        let settings = this.keyringService.getSetup()
-        if(!settings) {
-          let myuuid = uuidv4()
-          this.keyringService.setSetup({device: myuuid, partition: "min"});
-        }
-        this.router.navigate(["/keys"])
-     } else{
+      this.keyringService.setAccount(this.account).subscribe(result =>{
+        if(result){
+          this.router.navigate(["/keys"])
+        } 
+        else{
           this.dialogRef = this.dialog.open(InformationDialog, {
             width: '258px',
             data:"Bad account credentials."
           });
-     }
-    }, 1000)
+        }
+      })
+    } 
   }
 }
 

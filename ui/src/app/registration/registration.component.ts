@@ -34,8 +34,9 @@ export class RegistrationComponent implements OnInit {
     let account = JSON.parse(localStorage.getItem('currentAccount'));
     if(account){
       this.account = account
-      this.keyringService.setAccount(this.account)
-      this.router.navigate(["/keys"])
+      this.keyringService.setAccount(this.account).subscribe(result => {
+        this.router.navigate(["/keys"])
+      })
     } 
   }
   selectPassword(){
@@ -51,24 +52,19 @@ export class RegistrationComponent implements OnInit {
 
   registration(){
     if(this.loginControl.value && this.passwordControl.value){
-      this.keyringService.registerAccount(this.account)
-    } 
-    setTimeout(() => {
-      if(this.keyringService.getChecked()){
-        let settings = this.keyringService.getSetup()
-        if(!settings) {
-          let myuuid = uuidv4()
-          this.keyringService.setSetup({device: myuuid, partition: "min"});
+      this.keyringService.registerAccount(this.account).subscribe(result =>{
+        if(result){
+          this.router.navigate(["/keys"])  
         }
-        this.router.navigate(["/keys"])
-     } else{
+        else{
           let dialogRef = this.dialog.open(InformationDialog, {
             width: '258px',
             data: "This user is already exists."
           });
-     }
-    }, 1000)
-  }
+        }
+      })
+    }
+  } 
 }
 
 @Component({

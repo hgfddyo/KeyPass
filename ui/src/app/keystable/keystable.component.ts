@@ -54,8 +54,8 @@ export class KeystableComponent implements OnInit {
       input.type = 'password'
       editIcons[0].innerText='visibility'
     } else{
-        input.type = 'text'
-        editIcons[0].innerText='visibility_off'   
+      input.type = 'text'
+      editIcons[0].innerText='visibility_off'   
     }  
   }
 
@@ -64,12 +64,11 @@ export class KeystableComponent implements OnInit {
       login: element.login,
       context: element.context,
       password: element.password
-    })
-    setTimeout(() => {
+    }).subscribe(result => {
       this.keyringService.getKeyRing().subscribe(result =>{
         this.dataSource.data = result
+      })
     })
-    },100)
   }
 
   goToUpdate(element){
@@ -93,5 +92,4 @@ export class KeystableComponent implements OnInit {
   goToAddkey(){
     this.router.navigate(["/Addkey"])
   }
-
 }
