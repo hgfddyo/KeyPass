@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { destroyPlatform } from '@angular/core';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -42,9 +43,10 @@ describe('LoginComponent', () => {
   });
 
   beforeEach(() => {
-    localStorage.removeItem("currentAccount")
+    localStorage.removeItem("currentAccount") 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    component.dialog.closeAll()
     fixture.detectChanges();
   });
 
@@ -69,6 +71,7 @@ describe('LoginComponent', () => {
 
   it('should navigate to keys if CurrentAccount is set', () => {
     localStorage.setItem('currentAccount', JSON.stringify({login:1, password:1}))
+    fakeKeyringService.setAccount.and.returnValue(of(true))
     component.ngOnInit()
     expect(routerSpy.navigate).toHaveBeenCalledWith(["/keys"])
   });
@@ -92,80 +95,41 @@ describe('LoginComponent', () => {
     expect(component.account.password).toBe("2")
   });
 
-  it('should not Login and call Dialog if loginControl and passwordControl are not set', fakeAsync(() => {
+  it('should not Login if loginControl and passwordControl are not set', () => {
+    component.loginControl.setValue(undefined)
+    component.passwordControl.setValue(undefined)
     component.Login()
     fixture.detectChanges();
-    tick(2000)
-    fixture.detectChanges();
-    const dialogHeader = document.getElementsByTagName("h3")[0] as HTMLHeadElement
-    expect(dialogHeader.innerText).toEqual("Error")
     expect(fakeKeyringService.setAccount).not.toHaveBeenCalled()
-  }));
+  });
 
-  it('should Login and redirect to keys component if credentials are correct', fakeAsync(() => {
+  it('should Login and redirect to keys component if credentials are correct', () => {
     component.loginControl.setValue("1")
     component.passwordControl.setValue("2")
     component.account.login = component.loginControl.value
     component.account.password = component.passwordControl.value
-    fakeKeyringService.getChecked.and.returnValue(true)
+    fakeKeyringService.setAccount.and.returnValue(of(true))
     component.Login()
     expect(fakeKeyringService.setAccount).toHaveBeenCalledWith({login:"1", password:"2"})
-    fixture.detectChanges();
-    tick(2000)
     fixture.detectChanges();
     expect(routerSpy.navigate).toHaveBeenCalledWith(["/keys"])  
-  }));
+  });
 
-  it('should not Login and call dialog if credentials are incorrect', fakeAsync(() => {
+  it('should not Login and call dialog if credentials are incorrect', () => {
     component.loginControl.setValue("1")
     component.passwordControl.setValue("2")
     component.account.login = component.loginControl.value
     component.account.password = component.passwordControl.value
-    fakeKeyringService.getChecked.and.returnValue(false)
+    fakeKeyringService.setAccount.and.returnValue(of(false))
     component.Login()
     expect(fakeKeyringService.setAccount).toHaveBeenCalledWith({login:"1", password:"2"})
-    fixture.detectChanges();
-    tick(2000)
     fixture.detectChanges();
     const dialogHeader = document.getElementsByTagName("h3")[0] as HTMLHeadElement
     expect(dialogHeader.innerText).toEqual("Error")
     expect(routerSpy.navigate).not.toHaveBeenCalledWith(["/keys"])  
-  }));
-
-  it('should create correct uuid', () => {
-    let uuid = uuidv4()
-    expect(uuid.length).toEqual(36)
   });
 
-  it('should set Setup if Setup is not set', fakeAsync(() => {
-    component.loginControl.setValue("1")
-    component.passwordControl.setValue("2")
-    component.account.login = component.loginControl.value
-    component.account.password = component.passwordControl.value
-    fakeKeyringService.getChecked.and.returnValue(true)
-    component.Login()
-    expect(fakeKeyringService.setAccount).toHaveBeenCalledWith({login:"1", password:"2"})
-    fixture.detectChanges();
-    tick(2000)
-    expect(fakeKeyringService.setSetup).toHaveBeenCalled() 
-  }));
-
-   it('should not set Setup if Setup exists', fakeAsync(() => {
-    component.loginControl.setValue("1")
-    component.passwordControl.setValue("2")
-    component.account.login = component.loginControl.value
-    component.account.password = component.passwordControl.value
-    fakeKeyringService.getChecked.and.returnValue(true)
-    component.Login() 
-    fakeKeyringService.getSetup.and.returnValue({partition:"min", device:uuidv4()})
-    expect(fakeKeyringService.setAccount).toHaveBeenCalledWith({login:"1", password:"2"})
-    fixture.detectChanges();
-    tick(2000)
-    expect(fakeKeyringService.getSetup).toHaveBeenCalled() 
-    expect(fakeKeyringService.setSetup).not.toHaveBeenCalled() 
-  }));
-
-  it('should change template Login and Registration on click', fakeAsync(() => {
+  it('should change template Login and Registration on click', () => {
     let title = document.getElementsByClassName("enter")[0] as HTMLHeadElement
     expect(title.innerText).toEqual("Enter your login")
     let nextButton = document.getElementsByClassName("buttonnext")[0] as HTMLHeadElement
@@ -178,6 +142,6 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     title = document.getElementsByClassName("enter")[0] as HTMLHeadElement
     expect(title.innerText).toEqual("Enter your login")
-  }));
+  });
   
 });

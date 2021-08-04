@@ -15,6 +15,7 @@ import { Location } from '@angular/common'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 describe('AddkeyComponent', () => {
   let component: AddkeyComponent;
@@ -93,7 +94,7 @@ describe('AddkeyComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(["/Login"])
   });
 
-  it('should not call addKey method and not go to previous location', () => {
+  it('should not call addKey method and not go to previous location if controls dont set', () => {
     component.save()
     expect(fakeKeyringService.addKey).not.toHaveBeenCalled()
     expect(locationSpy.back).not.toHaveBeenCalled()
@@ -102,6 +103,7 @@ describe('AddkeyComponent', () => {
   it('should call addKey method and go to previous location', () => {
     component.loginControl.setValue("1")
     component.contextControl.setValue("2")
+    fakeKeyringService.addKey.and.returnValue(of(true))
     component.password = "3"
     component.save()
     expect(fakeKeyringService.addKey).toHaveBeenCalledWith({login:"1", context:"2", password:"3"})
